@@ -14,8 +14,9 @@ namespace FribergCarRental.Controllers
         }
         // GET: CarController
         public async Task<ActionResult> Index()
-        {
+        {            
             var cars = await _carRepository.GetAllAsync();
+            
             return View(cars);
         }
 

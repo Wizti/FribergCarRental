@@ -6,6 +6,7 @@ namespace FribergCarRental.Models
     {
         public int Id { get; set; }
         public string ImageUrl { get; set; }
+        public string ImageTitle { get; set; }
         [ForeignKey("Car")]
         public int CarId { get; set; }
     }
