@@ -1,29 +1,20 @@
-﻿@model FribergCarRental.Models.Customer
+﻿@model FribergCarRental.ViewModels.LoginViewModel
 @{
     ViewData["Title"] = "Index";
 }
 
-<div class="login-index">
+<form asp-action="Login" method="post">
     <div>
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <a href="/images/BigLogo.png"><img src="/images/BigLogo.png" class="img-fluid" alt="Responsive image" width="200" height="200" /></a>
-                <div class="form-group">
-                    <label asp-for="Email" class="control-label"></label>
-                    <input asp-for="Email" class="form-control"/>
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <br />
-                <div class="form-group">                    
-                    <button type="submit" value="Create" class="btn btn-primary">Logga in</button>
-                    <br />
-                    <p>eller</p>
-                    <br>
-                    <a asp-action="Create" class="btn btn-primary">Registrera dig</a>
-
-                </div>
-            </form>
+        <label for="Login">Username or Email</label>
+        <input asp-for="Login" id="Login" />
+        <span asp-validation-for="Login"></span>
     </div>
-</div>
+    <div>
+        <label for="User.Password">Password</label>
+        <input asp-for="User.PassWord" id="Password" type="password" />
+        <span asp-validation-for="User.PassWord"></span>
+    </div>
+    <button type="submit">Login</button>
+</form>
 
 

@@ -8,7 +8,6 @@
         public int Price { get; set; }
         public string Description { get; set; }
         public bool IsAvailable { get; set; }
-        public virtual List<Image> Images { get; set; }
-        
+        public virtual List<Image> Images { get; set; }        
     }
 }

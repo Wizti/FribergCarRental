@@ -1,9 +1,12 @@
 ﻿using FribergCarRental.Models;
+using FribergCarRental.ViewModels;
 
 namespace FribergCarRental.Data
 {
     public interface ILogin
     {
-        Task<User> GetByIdAsync(int id);
+        public Task<User> GetUserByEmailAsync(string email);
+        public Task<User> GetUserByUsernameAsync(string username);
+        void AddAsync(LoginViewModel modelVM);
     }
 }

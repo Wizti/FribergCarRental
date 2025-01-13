@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FribergCarRental.Models
 {
@@ -8,7 +9,10 @@ namespace FribergCarRental.Models
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public bool IsAdmin { get; set; }
+        [Required(ErrorMessage = "Användarnamn eller email krävs")]
         public string UserName { get; set; }
+        [Required(ErrorMessage = "Lösenord krävs")]
+        [DataType(DataType.Password)]
         public string PassWord { get; set; }
     }
 }

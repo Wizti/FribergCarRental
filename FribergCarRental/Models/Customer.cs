@@ -1,13 +1,22 @@
-﻿namespace FribergCarRental.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FribergCarRental.Models
 {
     public class Customer
     {
         public int Id { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [Required]
         public string Phone { get; set; }
+        [Required(ErrorMessage ="Behöver email")]
         public string Email { get; set; }
-        public virtual IEnumerable<Adress> Adresses { get; set; }
+        [ForeignKey("Adress")]
+        public int AdressId { get; set; }
+        public Adress Adress { get; set; }
 
     }
 }
