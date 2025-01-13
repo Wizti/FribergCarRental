@@ -18,9 +18,9 @@ namespace FribergCarRental.Data
             return await _context.Cars.FindAsync(id);
         }
 
-        public Task<List<Car>> GetAllAsync()
+        public async Task<List<Car>> GetAllAsync()
         {
-            return  _context.Cars.Include(i => i.Images).ToListAsync();
+            return  await _context.Cars.Include(i => i.Images).ToListAsync();
         }
     }
 }
