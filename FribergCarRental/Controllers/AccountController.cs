@@ -7,11 +7,11 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pag
 
 namespace FribergCarRental.Controllers
 {
-    public class LoginController : Controller
+    public class AccountController : Controller
     {
         private readonly ILogin _loginRepository;
 
-        public LoginController(ILogin loginRepository)
+        public AccountController(ILogin loginRepository)
         {
             this._loginRepository = loginRepository;
         }       
@@ -33,7 +33,7 @@ namespace FribergCarRental.Controllers
             return View();
         }
 
-        // GET: LoginController/Details/5
+        // GET: AccountController/Details/5
         [HttpGet]
         public ActionResult Login()
         {
@@ -84,7 +84,7 @@ namespace FribergCarRental.Controllers
 
             
             // Set up authentication (add cookies/session management here)
-            return RedirectToAction("Success", "Login");
+            return RedirectToAction("Success", "Account");
         }
     }
 }
