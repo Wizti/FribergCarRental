@@ -14,10 +14,12 @@ namespace FribergCarRental.Data
             this._context = context;
         }
 
-        public void AddAsync(LoginViewModel modelVM)
+        public void AddAsync(CreateViewModel createVM)
         {
-            _context.Users.Add(modelVM.User);
-            _context.Customers.Add(modelVM.Customer);
+            _context.Customers.Add(createVM.Customer);                    
+            _context.SaveChanges();
+            createVM.User.CustomerId = createVM.Customer.Id;
+            _context.Users.Add(createVM.User);
             _context.SaveChanges();
         }
 
@@ -26,19 +28,15 @@ namespace FribergCarRental.Data
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task<Customer> GetUserByEmailAsync(string email)
-        {
-            return await _context.Customers.FirstOrDefaultAsync(e => e.Email == email);
+        public async Task<User> GetUserByEmailAsync(string email)
+        {   
+            var customer = await _context.Customers.FirstOrDefaultAsync(e => e.Email == email);            
+            return await _context.Users.FirstOrDefaultAsync(i => i.CustomerId == customer.Id);
         }
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
-        }
-
-        Task<User> ILogin.GetUserByEmailAsync(string email)
-        {
-            throw new NotImplementedException();
         }
     }
 }

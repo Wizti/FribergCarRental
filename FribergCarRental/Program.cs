@@ -32,7 +32,7 @@ namespace FribergCarRental
                 app.UseHsts();
             }
 
-            
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

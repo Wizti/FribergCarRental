@@ -1,0 +1,21 @@
+﻿@model FribergCarRental.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<form asp-action="Login" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div>
+        <label for="Login">Username or Email</label>
+        <input asp-for="Login" id="UserName" />
+        <span asp-validation-for="Login" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Password">Password</label>
+        <input asp-for="Password" id="Password" type="password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <button type="submit">Login</button>
+</form>
+
+

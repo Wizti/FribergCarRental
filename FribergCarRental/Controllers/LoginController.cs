@@ -14,20 +14,22 @@ namespace FribergCarRental.Controllers
         public LoginController(ILogin loginRepository)
         {
             this._loginRepository = loginRepository;
-        }
-        // GET: LoginController
-        public ActionResult Index()
-        {
+        }       
+
+        public ActionResult Create()
+        {     
             return View();
         }
 
-        public ActionResult Create()
+        public ActionResult Logout()
         {
-            return View();
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Success()
         {
+            ViewBag.UserName = HttpContext.Session.GetString("UserName");
             return View();
         }
 
@@ -39,13 +41,13 @@ namespace FribergCarRental.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(LoginViewModel loginVM)
+        public ActionResult Create(CreateViewModel createVM)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _loginRepository.AddAsync(loginVM);
+                    _loginRepository.AddAsync(createVM);
                     return RedirectToAction("Success", "Login");
                 }
             }
@@ -58,43 +60,31 @@ namespace FribergCarRental.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel loginVM)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
-            }
-            if (string.IsNullOrWhiteSpace(model.Login))
-            {
-                ModelState.AddModelError("Login", "Login field is required.");
-                return View(model);
-            }
-            // Determine whether the input is an email or username
-            bool isEmail = model.Login.Contains("@");
-
-            User user;
-
-            if (isEmail)
-            {
-                // Find user by email
-                user = await _loginRepository.GetUserByEmailAsync(model.Login);
-            }
-            else
-            {
-                // Find user by username
-                user = await _loginRepository.GetUserByUsernameAsync(model.Login);
+                return View(loginVM);
             }
 
-            if (user == null || !(model.User.PassWord == user.PassWord))
+            bool isEmail = loginVM.Login.Contains("@");
 
+            User user = isEmail 
+                ? await _loginRepository.GetUserByEmailAsync(loginVM.Login)
+                : await _loginRepository.GetUserByUsernameAsync(loginVM.Login);
+            
+            if (user == null || loginVM.Password != user.Password)
             {
                 ModelState.AddModelError("", "Invalid login credentials.");
-                return View();
+                return View(loginVM);
             }
 
-            // Set up authentication (add cookies/session management here)
-            return RedirectToAction("Index", "Login");
+            HttpContext.Session.SetInt32("UserId", user.Id);
+            HttpContext.Session.SetString("UserName", user.UserName);
 
+            
+            // Set up authentication (add cookies/session management here)
+            return RedirectToAction("Success", "Login");
         }
     }
 }

@@ -5,17 +5,10 @@ namespace FribergCarRental.ViewModels
 {
     public class LoginViewModel
     {
-        public Customer Customer { get; set; }
-        public User User { get; set; }
+        [Required(ErrorMessage = "Användarnamn eller email krävs")]
         public string Login { get; set; }
-        public bool RememberMe { get; set; }
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if(string.IsNullOrWhiteSpace(User.UserName) || string.IsNullOrWhiteSpace(User.PassWord))
-            {
-                yield return new ValidationResult("Användarnamn eller email och lösenord krävs");
-            }
-        }
+        [Required(ErrorMessage = "Lösenord krävs")]
+        public string Password { get; set; }
+        //public bool RememberMe { get; set; }
     }
 }

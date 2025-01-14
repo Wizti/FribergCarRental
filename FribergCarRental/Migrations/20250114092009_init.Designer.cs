@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FribergCarRental.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250113113914_init")]
+    [Migration("20250114092009_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -174,7 +174,7 @@ namespace FribergCarRental.Migrations
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PassWord")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
