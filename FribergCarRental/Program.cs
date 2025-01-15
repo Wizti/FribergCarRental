@@ -15,7 +15,8 @@ namespace FribergCarRental
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
             builder.Services.AddTransient<ICar, CarRepository>();
             builder.Services.AddTransient<IAccount, AccountRepository>();
-  
+            builder.Services.AddTransient<IRental, RentalRepository>();
+
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);

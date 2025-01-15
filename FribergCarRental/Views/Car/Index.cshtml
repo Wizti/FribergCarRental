@@ -21,7 +21,11 @@
                             <h5 class="card-title">@item.Model - @item.Year</h5>
                             <p class="card-text">@item.Description</p>
                             <p><strong>@item.Price</strong> kr/dygn</p>
-                            <a href="#" class="btn btn-primary">Boka</a>
+
+                            <form asp-controller="Car" asp-action="RentCar" method="get">
+                                <input type="hidden" name="carId" value="@item.Id" />
+                                <button type="submit" class="btn btn-primary">Boka</button>
+                            </form>
                         </div>
                     </div>
                 </div>

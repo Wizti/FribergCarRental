@@ -9,11 +9,11 @@ namespace FribergCarRental.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IAccount _loginRepository;
+        private readonly IAccount _accountRepository;
 
-        public AccountController(IAccount loginRepository)
+        public AccountController(IAccount accountRepository)
         {
-            this._loginRepository = loginRepository;
+            this._accountRepository = accountRepository;
         }
 
         public ActionResult Create()
@@ -52,13 +52,12 @@ namespace FribergCarRental.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _loginRepository.AddAsync(createVM);
+                    _accountRepository.Add(createVM);
                     return RedirectToAction("Success", "Account");
                 }
             }
             catch
             {
-
                 return View();
             }
             return View();
@@ -75,8 +74,8 @@ namespace FribergCarRental.Controllers
             bool isEmail = loginVM.Login.Contains("@");
 
             User user = isEmail
-                ? await _loginRepository.GetUserByEmailAsync(loginVM.Login)
-                : await _loginRepository.GetUserByUsernameAsync(loginVM.Login);
+                ? await _accountRepository.GetUserByEmailAsync(loginVM.Login)
+                : await _accountRepository.GetUserByUsernameAsync(loginVM.Login);
 
             if (user == null || loginVM.Password != user.Password)
             {
@@ -84,11 +83,16 @@ namespace FribergCarRental.Controllers
                 return View(loginVM);
             }
 
-            HttpContext.Session.SetInt32("UserId", user.Id);
+            HttpContext.Session.SetInt32("UserId", user.CustomerId);
             HttpContext.Session.SetString("UserName", user.UserName);
 
+            var selectedCarId = HttpContext.Session.GetInt32("SelectedCarId");
+            if (selectedCarId.HasValue)
+            {
+                HttpContext.Session.Remove("SelectedCarId");
+                return RedirectToAction("SelectDates", "Rental", new { carId = selectedCarId.Value });
+            }
 
-            // Set up authentication (add cookies/session management here)
             return RedirectToAction("Success", "Account");
         }
         [HttpPost]
@@ -96,13 +100,10 @@ namespace FribergCarRental.Controllers
         {
             if (!ModelState.IsValid)
             {
+                return View(forgotPasswordVM);
             }
 
-            bool isEmail = forgotPasswordVM.User.Contains("@");
-
-            User user = isEmail
-                ? await _loginRepository.GetUserByEmailAsync(forgotPasswordVM.User)
-                : await _loginRepository.GetUserByUsernameAsync(forgotPasswordVM.User);
+            User user = await _accountRepository.GetUserByEmailAsync(forgotPasswordVM.Email);                
 
             if (user == null)
             {
@@ -110,8 +111,8 @@ namespace FribergCarRental.Controllers
                 return View(forgotPasswordVM);
             }
 
-            ViewBag.ShowPassword = user.Password;
-            return RedirectToAction("ForgotPassword", "Account");
+            ViewBag.ShowPassword = $"Ditt lösen: {user.Password}";
+            return View();
         }
 
     }

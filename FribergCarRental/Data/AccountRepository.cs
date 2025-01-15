@@ -14,9 +14,9 @@ namespace FribergCarRental.Data
             this._context = context;
         }
 
-        public void AddAsync(CreateViewModel createVM)
+        public void Add(CreateViewModel createVM)
         {
-            _context.Customers.Add(createVM.Customer);                    
+            _context.Customers.Add(createVM.Customer);
             _context.SaveChanges();
             createVM.User.CustomerId = createVM.Customer.Id;
             _context.Users.Add(createVM.User);
@@ -29,8 +29,8 @@ namespace FribergCarRental.Data
         }
 
         public async Task<User> GetUserByEmailAsync(string email)
-        {   
-            var customer = await _context.Customers.FirstOrDefaultAsync(e => e.Email == email);            
+        {
+            var customer = await _context.Customers.FirstOrDefaultAsync(e => e.Email == email);
             return await _context.Users.FirstOrDefaultAsync(i => i.CustomerId == customer.Id);
         }
 

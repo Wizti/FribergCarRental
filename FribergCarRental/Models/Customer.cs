@@ -15,8 +15,8 @@ namespace FribergCarRental.Models
         [Required(ErrorMessage ="Behöver email")]
         public string Email { get; set; }
         [ForeignKey("Adress")]
-        public int AdressId { get; set; }
-        public Adress Adress { get; set; }
+        public int AddressId { get; set; }
+        public Address Address { get; set; }
 
     }
 }

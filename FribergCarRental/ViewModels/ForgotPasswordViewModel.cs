@@ -4,7 +4,7 @@ namespace FribergCarRental.ViewModels
 {
     public class ForgotPasswordViewModel
     {
-        [Required(ErrorMessage = "Användarnamn eller email krävs")]
-        public string User { get; set; }
+        [Required(ErrorMessage = "Email krävs")]
+        public string Email { get; set; }
     }
 }

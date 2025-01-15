@@ -7,6 +7,6 @@ namespace FribergCarRental.Data
     {
         public Task<User> GetUserByEmailAsync(string email);
         public Task<User> GetUserByUsernameAsync(string username);
-        void AddAsync(CreateViewModel createVM);
+        void Add(CreateViewModel createVM);
     }
 }

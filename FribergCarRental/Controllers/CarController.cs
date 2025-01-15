@@ -14,10 +14,21 @@ namespace FribergCarRental.Controllers
         }
         // GET: CarController
         public async Task<ActionResult> Index()
-        {            
+        {
             var cars = await _carRepository.GetAllAsync();
-            
+
             return View(cars);
+        }
+
+        public IActionResult RentCar(int carId)
+        {
+            if (HttpContext.Session.GetString("UserId") == null)
+            {
+                HttpContext.Session.SetInt32("SelectedCarId", carId);
+                return RedirectToAction("Login", "Account");
+            }
+
+            return RedirectToAction("SelectDates", "Rental", new { carId });
         }
 
         // GET: CarController/Details/5
