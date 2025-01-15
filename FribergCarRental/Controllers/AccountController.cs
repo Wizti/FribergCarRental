@@ -46,7 +46,7 @@ namespace FribergCarRental.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CreateViewModel createVM)
+        public async Task<IActionResult> Create(CreateViewModel createVM)
         {
             try
             {
@@ -95,6 +95,7 @@ namespace FribergCarRental.Controllers
 
             return RedirectToAction("Success", "Account");
         }
+
         [HttpPost]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel forgotPasswordVM)
         {
@@ -103,7 +104,7 @@ namespace FribergCarRental.Controllers
                 return View(forgotPasswordVM);
             }
 
-            User user = await _accountRepository.GetUserByEmailAsync(forgotPasswordVM.Email);                
+            User user = await _accountRepository.GetUserByEmailAsync(forgotPasswordVM.Email);
 
             if (user == null)
             {
