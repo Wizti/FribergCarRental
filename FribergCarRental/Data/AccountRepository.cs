@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FribergCarRental.Data
 {
-    public class LoginRepository : ILogin
+    public class AccountRepository : IAccount
     {
         private readonly ApplicationDbContext _context;
 
-        public LoginRepository(ApplicationDbContext context)
+        public AccountRepository(ApplicationDbContext context)
         {
             this._context = context;
         }

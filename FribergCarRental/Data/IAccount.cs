@@ -3,7 +3,7 @@ using FribergCarRental.ViewModels;
 
 namespace FribergCarRental.Data
 {
-    public interface ILogin
+    public interface IAccount
     {
         public Task<User> GetUserByEmailAsync(string email);
         public Task<User> GetUserByUsernameAsync(string username);

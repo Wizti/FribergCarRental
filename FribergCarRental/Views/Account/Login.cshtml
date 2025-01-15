@@ -3,19 +3,35 @@
     ViewData["Title"] = "Login";
 }
 
-<form asp-action="Login" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div>
-        <label for="Login">Username or Email</label>
-        <input asp-for="Login" id="UserName" />
-        <span asp-validation-for="Login" class="text-danger"></span>
-    </div>
-    <div>
-        <label for="Password">Password</label>
-        <input asp-for="Password" id="Password" type="password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-    <button type="submit">Login</button>
-</form>
+<div class="container login-card">
+    <form asp-action="Login" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-4">
+            <label for="Login" class="form-label">Användare eller Epostadress</label>
+            <input asp-for="Login" class="form-control w-100" id="username" placeholder="Email eller Användarnamn">
+            <span asp-validation-for="Login" class="text-danger"></span>
+        </div>
+        <div class="mb-4">
+            <label for="Password" class="form-label">Lösenord</label>
+            <div class="input-group">
+                <input asp-for="Password" type="password" class="form-control" id="password" placeholder="Lösenord">
+                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+            <span asp-validation-for="Password" class="text-danger"></span>
+
+            <p class="text-end"><a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href=" /Account/ForgotPassword">Glömt lösenord?</a></p>
+        </div>
+
+        
+        <br>
+        <br />
+        <div>
+            <p>Har ni inget konto?&nbsp;<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href=" /Account/Create">Registrera</a></p>
+        </div>
+    </form>
+</div>
 
 

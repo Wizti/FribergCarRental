@@ -9,15 +9,20 @@ namespace FribergCarRental.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly ILogin _loginRepository;
+        private readonly IAccount _loginRepository;
 
-        public AccountController(ILogin loginRepository)
+        public AccountController(IAccount loginRepository)
         {
             this._loginRepository = loginRepository;
-        }       
+        }
 
         public ActionResult Create()
-        {     
+        {
+            return View();
+        }
+
+        public ActionResult ForgotPassword()
+        {
             return View();
         }
 
@@ -48,7 +53,7 @@ namespace FribergCarRental.Controllers
                 if (ModelState.IsValid)
                 {
                     _loginRepository.AddAsync(createVM);
-                    return RedirectToAction("Success", "Login");
+                    return RedirectToAction("Success", "Account");
                 }
             }
             catch
@@ -69,10 +74,10 @@ namespace FribergCarRental.Controllers
 
             bool isEmail = loginVM.Login.Contains("@");
 
-            User user = isEmail 
+            User user = isEmail
                 ? await _loginRepository.GetUserByEmailAsync(loginVM.Login)
                 : await _loginRepository.GetUserByUsernameAsync(loginVM.Login);
-            
+
             if (user == null || loginVM.Password != user.Password)
             {
                 ModelState.AddModelError("", "Invalid login credentials.");
@@ -82,9 +87,32 @@ namespace FribergCarRental.Controllers
             HttpContext.Session.SetInt32("UserId", user.Id);
             HttpContext.Session.SetString("UserName", user.UserName);
 
-            
+
             // Set up authentication (add cookies/session management here)
             return RedirectToAction("Success", "Account");
         }
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel forgotPasswordVM)
+        {
+            if (!ModelState.IsValid)
+            {
+            }
+
+            bool isEmail = forgotPasswordVM.User.Contains("@");
+
+            User user = isEmail
+                ? await _loginRepository.GetUserByEmailAsync(forgotPasswordVM.User)
+                : await _loginRepository.GetUserByUsernameAsync(forgotPasswordVM.User);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Invalid login credentials.");
+                return View(forgotPasswordVM);
+            }
+
+            ViewBag.ShowPassword = user.Password;
+            return RedirectToAction("ForgotPassword", "Account");
+        }
+
     }
 }
