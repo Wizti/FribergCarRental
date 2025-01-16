@@ -52,8 +52,18 @@ namespace FribergCarRental.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _accountRepository.Add(createVM);
-                    return RedirectToAction("Success", "Account");
+                    var selectedCarId = HttpContext.Session.GetInt32("SelectedCarId");
+                    if (selectedCarId.HasValue)
+                    {
+                        HttpContext.Session.Remove("SelectedCarId");
+                        return RedirectToAction("SelectDates", "Rental", new { carId = selectedCarId.Value });
+                    }
+                    else
+                    {
+                        _accountRepository.Add(createVM);
+                        return RedirectToAction("Success", "Account");
+                    }
+                    
                 }
             }
             catch

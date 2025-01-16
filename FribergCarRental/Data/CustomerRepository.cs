@@ -1,8 +1,9 @@
 ﻿using FribergCarRental.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FribergCarRental.Data
 {
-    public class CustomerRepository : ICustomer
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -16,14 +17,15 @@ namespace FribergCarRental.Data
             await _context.SaveChangesAsync();
         }
 
-        public Task<Customer> GetByEmailAsync(string email)
+        public async Task<Customer> GetByEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            return await _context.Customers.FirstOrDefaultAsync(c => c.Email == email);
+
         }
 
-        public Task<Customer> GetByIdAsync(int id)
+        public async Task<Customer> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Customers.FindAsync(id);
         }
     }
 }

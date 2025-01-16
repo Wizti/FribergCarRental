@@ -13,9 +13,12 @@ namespace FribergCarRental
             builder.Services.AddControllersWithViews();
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
-            builder.Services.AddTransient<ICar, CarRepository>();
+            builder.Services.AddScoped<ICar, CarRepository>();
             builder.Services.AddTransient<IAccount, AccountRepository>();
-            builder.Services.AddTransient<IRental, RentalRepository>();
+            builder.Services.AddScoped<IRental, RentalRepository>();
+            builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
 
             builder.Services.AddSession(options =>
             {
