@@ -4,16 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FribergCarRental.Data
 {
-    public class RentalRepository : IRental
+    public class RentalRepository : IRentalRepository
     {
         private readonly ApplicationDbContext _context;
         public RentalRepository(ApplicationDbContext context)
         {
             _context = context;
-        }
-        public async Task<Car> GetByIdAsync(int carId)
-        {
-            return await _context.Cars.FirstOrDefaultAsync(c => c.Id == carId);
         }
 
         public async Task AddAsync(Rental rental)

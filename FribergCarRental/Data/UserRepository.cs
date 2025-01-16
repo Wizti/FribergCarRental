@@ -31,7 +31,8 @@ namespace FribergCarRental.Data
 
         public async Task<User> GetByUsernameAsync(string username)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
+            var customer = await _context.Customers.FirstOrDefaultAsync(u => u.UserName == username);
+            return await _context.Users.FirstOrDefaultAsync(u => u.CustomerId == customer.Id);
         }
     }
 }

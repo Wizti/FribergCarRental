@@ -12,11 +12,15 @@ namespace FribergCarRental.Models
         public string LastName { get; set; }
         [Required]
         public string Phone { get; set; }
-        [Required(ErrorMessage ="Behöver email")]
+        [Required(ErrorMessage = "Användarnamn krävs")]
+        public string UserName { get; set; }
+        [Required(ErrorMessage ="Email krävs")]
         public string Email { get; set; }
         [ForeignKey("Adress")]
         public int AddressId { get; set; }
         public Address Address { get; set; }
+
+        public virtual ICollection<Rental> Rentals { get; set; }
 
     }
 }

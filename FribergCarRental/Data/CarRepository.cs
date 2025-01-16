@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FribergCarRental.Data
 {
-    public class CarRepository : ICar
+    public class CarRepository : ICarRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -11,7 +11,6 @@ namespace FribergCarRental.Data
         {
             this._context = context;
         }
-
 
         public async Task<Car> GetByIdAsync(int id)
         {

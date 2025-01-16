@@ -9,16 +9,16 @@ namespace FribergCarRental.Controllers
 {
     public class RentalController : Controller
     {
-        private readonly IRental _rentalRepository;
+        private readonly IRentalService _rentalService;
 
-        public RentalController(IRental rentalRepository)
+        public RentalController(IRentalService rentalService)
         {
-            this._rentalRepository = rentalRepository;
+            this._rentalService = rentalService;
         }
 
         public async Task<IActionResult> SelectDates(int carId)
         {
-            var car = await _rentalRepository.GetByIdAsync(carId);
+            var car = await _rentalService.GetCarByIdAsync(carId);
             if (car == null)
             {
                 return NotFound();
@@ -30,8 +30,8 @@ namespace FribergCarRental.Controllers
                 Description = car.Description,
                 Model = car.Model,
                 Price = car.Price,
-                StartDate = DateOnly.MaxValue,
-                EndDate = DateOnly.MinValue,
+                StartDate = DateOnly.FromDateTime(DateTime.Today),
+                EndDate = DateOnly.FromDateTime(DateTime.Today),
             };
             return View(rentalViewModel);
         }
@@ -61,7 +61,6 @@ namespace FribergCarRental.Controllers
         [HttpPost]
         public async Task<IActionResult> ConfirmRental(RentalViewModel rentalVM)
         {
-
             var customerId = HttpContext.Session.GetInt32("UserId");
 
             if (customerId == null)
@@ -69,21 +68,27 @@ namespace FribergCarRental.Controllers
                 RedirectToAction("Login", "Account");
             }
 
-            var car = await _rentalRepository.GetByIdAsync(rentalVM.CarId);
-            if (car == null)
+            var currentDate = DateOnly.FromDateTime(DateTime.Today);
+            if(rentalVM.StartDate < currentDate)
             {
-                return NotFound("Car not found.");
+                ModelState.AddModelError("", "Kan inte boka tidigare än dagens datum.");
+                return View("SelectDates", rentalVM);
             }
-            
+            if (rentalVM.StartDate >= rentalVM.EndDate)
+            {
+                ModelState.AddModelError("", "Startdatum måste vara tidigare än slutdatum.");
+                return View("SelectDates", rentalVM);
+            }
+
             var rental = new Rental
             {
-                CarId = car.Id,
+                CarId = rentalVM.CarId,
                 CustomerId = customerId.Value,
                 RentalStart = rentalVM.StartDate,
                 RentalEnd = rentalVM.EndDate
             };
 
-            await _rentalRepository.AddAsync(rental);
+            await _rentalService.CreateRentalAsync(rental);
 
             return RedirectToAction("RentalSuccess", "Rental");
 

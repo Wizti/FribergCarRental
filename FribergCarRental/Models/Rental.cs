@@ -5,6 +5,7 @@ namespace FribergCarRental.Models
     public class Rental
     {
         public int Id { get; set; }
+        public RentalStatus Status { get; set; }
         public DateOnly RentalStart { get; set; }
         public DateOnly RentalEnd { get; set; }
         public int CustomerId { get; set; }

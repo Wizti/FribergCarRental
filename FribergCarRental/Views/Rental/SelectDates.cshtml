@@ -22,28 +22,33 @@
         </div>
     </div>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" asp-controller="Rental" asp-action="ConfirmRental">
-            <input type="hidden" name="CarId" value="@Model.CarId" />
-            <div class="form-group">
-                <label for="StartDate">Startdatum</label>
-                <input type="date" id="StartDate" name="StartDate" class="form-control" required />
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <div>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger"})
             </div>
-            <div class="form-group">
-                <label for="EndDate">Slutdatum</label>
-                <input type="date" id="EndDate" name="EndDate" class="form-control" required />
-            </div>
+            <form method="post" asp-controller="Rental" asp-action="ConfirmRental">
+                <input type="hidden" name="CarId" value="@Model.CarId" />
+                <div class="form-group">
+                    <label asp-for="StartDate">Startdatum</label>
+                    <input type="date" asp-for="StartDate" class="form-control" value="@Model.StartDate" required />
+                    <
 
-            <div class="form-group">
-                <input type="submit" value="Boka" class="btn btn-primary" />
-            </div>
-        </form>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EndDate">Slutdatum</label>
+                    <input type="date" asp-for="EndDate" class="form-control" value="@Model.EndDate" required />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Boka" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 

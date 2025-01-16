@@ -6,6 +6,7 @@ namespace FribergCarRental.Data
     {
         Task AddAsync(Customer customer);
         Task<Customer> GetByEmailAsync(string email);
+        Task<Customer> GetByUsernameAsync(string username);
         Task<Customer> GetByIdAsync(int id);
     }
 }

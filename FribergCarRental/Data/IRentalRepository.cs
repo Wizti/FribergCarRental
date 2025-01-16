@@ -3,9 +3,8 @@ using FribergCarRental.ViewModels;
 
 namespace FribergCarRental.Data
 {
-    public interface IRental
+    public interface IRentalRepository
     {
-        Task<Car> GetByIdAsync(int carId);
         Task AddAsync(Rental rental);
     }
 }

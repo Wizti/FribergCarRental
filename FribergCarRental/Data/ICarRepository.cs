@@ -2,7 +2,7 @@
 
 namespace FribergCarRental.Data
 {
-    public interface ICar
+    public interface ICarRepository
     {
         Task<Car> GetByIdAsync(int id);
         Task<List<Car>> GetAllAsync();

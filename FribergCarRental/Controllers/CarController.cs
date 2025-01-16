@@ -6,9 +6,9 @@ namespace FribergCarRental.Controllers
 {
     public class CarController : Controller
     {
-        private readonly ICar _carRepository;
+        private readonly ICarRepository _carRepository;
 
-        public CarController(ICar carRepository)
+        public CarController(ICarRepository carRepository)
         {
             this._carRepository = carRepository;
         }
