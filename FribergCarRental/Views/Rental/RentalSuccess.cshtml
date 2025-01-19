@@ -1,7 +1,44 @@
-﻿
+﻿@model FribergCarRental.ViewModels.RentalViewModel
+
 @{
     ViewData["Title"] = "RentalSuccess";
 }
 
-<h1>RentalSuccess</h1>
+<h1>Din bokning är nu bekräftad</h1>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Price)
+            </td>
+        </tr>
+
+    </tbody>
+</table>

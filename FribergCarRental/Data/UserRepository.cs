@@ -18,21 +18,20 @@ namespace FribergCarRental.Data
             await _context.SaveChangesAsync();
         }
 
-        public async Task<User> GetByEmailAsync(string email)
+        /*public async Task<User> GetByEmailAsync(string email)
         {
             var customer = await _context.Customers.FirstOrDefaultAsync(e => e.Email == email);
             return await _context.Users.FirstOrDefaultAsync(i => i.CustomerId == customer.Id);
-        }
+        }*/
 
         public async Task<User> GetByIdAsync(int id)
         {
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task<User> GetByUsernameAsync(string username)
-        {
-            var customer = await _context.Customers.FirstOrDefaultAsync(u => u.UserName == username);
-            return await _context.Users.FirstOrDefaultAsync(u => u.CustomerId == customer.Id);
+        public async Task<User> GetUserByCustomerIdAsync(int customerId)
+        {            
+            return await _context.Users.FirstOrDefaultAsync(u => u.CustomerId == customerId);
         }
     }
 }

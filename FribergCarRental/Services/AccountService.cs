@@ -1,7 +1,10 @@
-﻿using FribergCarRental.Models;
+﻿using FribergCarRental.Data;
+using FribergCarRental.Data.interfaces;
+using FribergCarRental.Models;
 using FribergCarRental.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
-namespace FribergCarRental.Data
+namespace FribergCarRental.Services
 {
     public class AccountService : IAccountService
     {
@@ -10,8 +13,8 @@ namespace FribergCarRental.Data
 
         public AccountService(ICustomerRepository customerRepository, IUserRepository userRepository)
         {
-            this._customerRepository = customerRepository;
-            this._userRepository = userRepository;
+            _customerRepository = customerRepository;
+            _userRepository = userRepository;
         }
         public async Task AddAsync(CreateViewModel createVM)
         {
@@ -45,7 +48,8 @@ namespace FribergCarRental.Data
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
-            return await _userRepository.GetByUsernameAsync(username);
+            var customer = await GetCustomerByUsernameAsync(username);
+            return await _userRepository.GetUserByCustomerIdAsync(customer.Id);
         }
     }
 }

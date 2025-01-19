@@ -1,4 +1,4 @@
-﻿using FribergCarRental.Data;
+﻿using FribergCarRental.Data.interfaces;
 using FribergCarRental.Models;
 using FribergCarRental.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -69,14 +69,21 @@ namespace FribergCarRental.Controllers
             }
 
             var currentDate = DateOnly.FromDateTime(DateTime.Today);
-            if(rentalVM.StartDate < currentDate)
+            if (rentalVM.StartDate < currentDate)
             {
                 ModelState.AddModelError("", "Kan inte boka tidigare än dagens datum.");
                 return View("SelectDates", rentalVM);
             }
+
             if (rentalVM.StartDate >= rentalVM.EndDate)
             {
                 ModelState.AddModelError("", "Startdatum måste vara tidigare än slutdatum.");
+                return View("SelectDates", rentalVM);
+            }
+
+            if (!await _rentalService.IsCarAvailableAsync(rentalVM.CarId, rentalVM.StartDate, rentalVM.EndDate))
+            {
+                ModelState.AddModelError("", "Bilen är tyvärr inte tillgänglig från och till det datumet du valde.");
                 return View("SelectDates", rentalVM);
             }
 
@@ -90,7 +97,7 @@ namespace FribergCarRental.Controllers
 
             await _rentalService.CreateRentalAsync(rental);
 
-            return RedirectToAction("RentalSuccess", "Rental");
+            return View("RentalSuccess", rentalVM);
 
         }
 
@@ -150,5 +157,22 @@ namespace FribergCarRental.Controllers
                 return View();
             }
         }
+
+        // helper method
+        /*private async Task<IActionResult> PopulateSelectDatesView(RentalViewModel rentalVM)
+        {
+            var car = await _rentalService.GetCarByIdAsync(rentalVM.CarId);
+
+            if (car == null)
+            {
+                return NotFound();
+            }
+
+            rentalVM.Description = car.Description;
+            rentalVM.Model = car.Model;
+            rentalVM.Price = car.Price;
+
+            return View("SelectDates", rentalVM);
+        }*/
     }
 }

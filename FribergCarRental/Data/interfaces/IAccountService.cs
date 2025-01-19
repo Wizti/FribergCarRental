@@ -1,7 +1,7 @@
 ﻿using FribergCarRental.Models;
 using FribergCarRental.ViewModels;
 
-namespace FribergCarRental.Data
+namespace FribergCarRental.Data.interfaces
 {
     public interface IAccountService
     {

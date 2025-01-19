@@ -1,6 +1,8 @@
-﻿using FribergCarRental.Models;
+﻿using FribergCarRental.Data;
+using FribergCarRental.Data.interfaces;
+using FribergCarRental.Models;
 
-namespace FribergCarRental.Data
+namespace FribergCarRental.Services
 {
     public class RentalService : IRentalService
     {
@@ -9,8 +11,8 @@ namespace FribergCarRental.Data
 
         public RentalService(IRentalRepository rentalRepository, ICarRepository carRepository)
         {
-            this._rentalRepository = rentalRepository;
-            this._carRepository = carRepository;
+            _rentalRepository = rentalRepository;
+            _carRepository = carRepository;
         }
         public async Task CreateRentalAsync(Rental rental)
         {
@@ -28,6 +30,12 @@ namespace FribergCarRental.Data
             return await _carRepository.GetByIdAsync(carId);
         }
 
+        public async Task<bool> IsCarAvailableAsync(int carId, DateOnly startDate, DateOnly endDate)
+        {
+            var rentals = await _rentalRepository.GetRentalsForCarAsync(carId, startDate, endDate);
+            return !rentals.Any();
+        }
+
         public void UpdateRentalStatus(Rental rental)
         {
             var currentDate = DateOnly.FromDateTime(DateTime.Today);
@@ -36,7 +44,7 @@ namespace FribergCarRental.Data
             {
                 rental.Status = RentalStatus.Upcoming;
             }
-            else if(rental.RentalStart <= currentDate && rental.RentalEnd >= currentDate)
+            else if (rental.RentalStart <= currentDate && rental.RentalEnd >= currentDate)
             {
                 rental.Status = RentalStatus.Active;
             }

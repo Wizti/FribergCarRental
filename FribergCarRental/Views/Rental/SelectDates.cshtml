@@ -21,34 +21,37 @@
             </div>
         </div>
     </div>
+</div>
 
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <div>
-                @Html.ValidationSummary(false, "", new { @class = "text-danger"})
-            </div>
-            <form method="post" asp-controller="Rental" asp-action="ConfirmRental">
-                <input type="hidden" name="CarId" value="@Model.CarId" />
-                <div class="form-group">
-                    <label asp-for="StartDate">Startdatum</label>
-                    <input type="date" asp-for="StartDate" class="form-control" value="@Model.StartDate" required />
-                    <
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="EndDate">Slutdatum</label>
-                    <input type="date" asp-for="EndDate" class="form-control" value="@Model.EndDate" required />
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Boka" class="btn btn-primary" />
-                </div>
-            </form>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div>
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         </div>
-    </div>
+        <form method="post" asp-controller="Rental" asp-action="ConfirmRental">
+            <input type="hidden" asp-for="CarId" value="@Model.CarId" />
+            <input type="hidden" asp-for="Model" value="@Model.Model" />
+            <input type="hidden" asp-for="Price" value="@Model.Price" />
+            <input type="hidden" asp-for="Description" value="@Model.Description" />
+            <div class="form-group">
+                <label asp-for="StartDate">Startdatum</label>
+                <input type="date" asp-for="StartDate" class="form-control" value="@Model.StartDate" required />
 
-    <div>
-        <a asp-action="Index">Back to List</a>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate">Slutdatum</label>
+                <input type="date" asp-for="EndDate" class="form-control" value="@Model.EndDate" required />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Boka" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
