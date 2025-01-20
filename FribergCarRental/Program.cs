@@ -9,6 +9,7 @@ namespace FribergCarRental
     {
         public static void Main(string[] args)
         {
+            // New Branch ChangeOfBaseModels
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
