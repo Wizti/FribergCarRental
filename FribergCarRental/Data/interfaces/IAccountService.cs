@@ -6,10 +6,9 @@ namespace FribergCarRental.Data.interfaces
     public interface IAccountService
     {
         Task<User> GetByIdAsync(int id);
-        Task<Customer> GetCustomerByEmailAsync(string email);
-        Task<Customer> GetCustomerByUsernameAsync(string username);
+        Task<User> GetUserByEmailAsync(string email);        
         Task<User> GetUserByUsernameAsync(string userName);
-        Task AddAsync(CreateViewModel createVM);
-        Task<bool> CustomerExistsAsync(string email, string username);
+        Task AddAsync(Customer customer);
+        Task<bool> UserExistsAsync(string email, string username);
     }
 }

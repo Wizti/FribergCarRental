@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using FribergCarRental.Data.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FribergCarRental.Models
 {

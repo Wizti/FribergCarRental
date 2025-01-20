@@ -1,4 +1,5 @@
-﻿using FribergCarRental.Data.interfaces;
+﻿using FribergCarRental.Data.Enums;
+using FribergCarRental.Data.interfaces;
 using FribergCarRental.Models;
 using FribergCarRental.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -46,26 +47,27 @@ namespace FribergCarRental.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateViewModel createVM)
+        public async Task<IActionResult> Create(Customer customer)
         {
             if (!ModelState.IsValid)
             {
-                return View(createVM);
+                return View(customer);
             }
 
-            if (await _accountService.CustomerExistsAsync(createVM.Customer.Email, createVM.Customer.UserName))
+            if (await _accountService.UserExistsAsync(customer.Email, customer.UserName))
             {
                 ModelState.AddModelError("", "Email eller Användarnamn är upptaget");
-                return View(createVM);
+                return View(customer);
             }
 
             try
             {
-                await _accountService.AddAsync(createVM);
-                User user = await _accountService.GetUserByUsernameAsync(createVM.Customer.UserName);
+                customer.Role = Role.Customer;
+                await _accountService.AddAsync(customer);
+                User user = await _accountService.GetUserByUsernameAsync(customer.UserName);
 
-                HttpContext.Session.SetInt32("UserId", user.CustomerId);
-                HttpContext.Session.SetString("UserName", createVM.Customer.UserName);
+                //HttpContext.Session.SetInt32("UserId", user.CustomerId);
+                HttpContext.Session.SetString("UserName", customer.UserName);
 
                 var selectedCarId = HttpContext.Session.GetInt32("SelectedCarId");
                 if (selectedCarId.HasValue)
@@ -94,10 +96,10 @@ namespace FribergCarRental.Controllers
 
             bool isEmail = loginVM.Login.Contains("@");
 
-            Customer customer = isEmail
-                ? await _accountService.GetCustomerByEmailAsync(loginVM.Login)
-                : await _accountService.GetCustomerByUsernameAsync(loginVM.Login);
-            User user = await _accountService.GetUserByUsernameAsync(customer.UserName);
+            User user = isEmail
+                ? await _accountService.GetUserByEmailAsync(loginVM.Login)
+                : await _accountService.GetUserByUsernameAsync(loginVM.Login);
+            //User user = await _accountService.GetUserByUsernameAsync(customer.UserName);
 
             if (user == null || loginVM.Password != user.Password)
             {
@@ -105,8 +107,8 @@ namespace FribergCarRental.Controllers
                 return View(loginVM);
             }
 
-            HttpContext.Session.SetInt32("UserId", user.CustomerId);
-            HttpContext.Session.SetString("UserName", customer.UserName);
+            HttpContext.Session.SetInt32("UserId", user.Id);
+            HttpContext.Session.SetString("UserName", user.UserName);
 
             var selectedCarId = HttpContext.Session.GetInt32("SelectedCarId");
             if (selectedCarId.HasValue)
@@ -126,15 +128,15 @@ namespace FribergCarRental.Controllers
                 return View(forgotPasswordVM);
             }
 
-            Customer customer = await _accountService.GetCustomerByEmailAsync(forgotPasswordVM.Email);
+            User user = await _accountService.GetUserByEmailAsync(forgotPasswordVM.Email);
 
-            if (customer == null)
+            if (user == null)
             {
                 ModelState.AddModelError("", "Invalid login credentials.");
                 return View(forgotPasswordVM);
             }
 
-            User user = await _accountService.GetUserByUsernameAsync(customer.UserName);
+            //User user = await _accountService.GetUserByUsernameAsync(user.UserName);
 
             ViewBag.ShowPassword = $"Ditt lösen: {user.Password}";
             return View();

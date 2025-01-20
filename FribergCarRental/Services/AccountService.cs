@@ -16,18 +16,18 @@ namespace FribergCarRental.Services
             _customerRepository = customerRepository;
             _userRepository = userRepository;
         }
-        public async Task AddAsync(CreateViewModel createVM)
+        public async Task AddAsync(Customer customer)
         {
-            await _customerRepository.AddAsync(createVM.Customer);
-            createVM.User.CustomerId = createVM.Customer.Id;
-            createVM.User.IsAdmin = false;
-            await _userRepository.AddAsync(createVM.User);
+            await _customerRepository.AddAsync(customer);
+            //customer.User.CustomerId = customer.Customer.Id;
+            //await _userRepository.AddAsync(customer.User);
         }
 
-        public async Task<bool> CustomerExistsAsync(string email, string username)
+        public async Task<bool> UserExistsAsync(string email, string username)
         {
-            bool emailExists = await _customerRepository.GetByEmailAsync(email) != null;
-            bool userNameExits = await _customerRepository.GetByUsernameAsync(username) != null;
+            bool emailExists = await _userRepository.GetByEmailAsync(email) != null;
+            bool userNameExits = await _userRepository.GetByUsernameAsync(username) != null;
+
             return emailExists || userNameExits;
         }
 
@@ -36,20 +36,14 @@ namespace FribergCarRental.Services
             return await _userRepository.GetByIdAsync(id);
         }
 
-        public async Task<Customer> GetCustomerByEmailAsync(string email)
+        public async Task<User> GetUserByEmailAsync(string email)
         {
-            return await _customerRepository.GetByEmailAsync(email);
-        }
-
-        public async Task<Customer> GetCustomerByUsernameAsync(string username)
-        {
-            return await _customerRepository.GetByUsernameAsync(username);
+            return await _userRepository.GetByEmailAsync(email);
         }
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
-            var customer = await GetCustomerByUsernameAsync(username);
-            return await _userRepository.GetUserByCustomerIdAsync(customer.Id);
+            return await _userRepository.GetByUsernameAsync(username);
         }
     }
 }

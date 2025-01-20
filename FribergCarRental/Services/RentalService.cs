@@ -1,4 +1,5 @@
 ﻿using FribergCarRental.Data;
+using FribergCarRental.Data.Enums;
 using FribergCarRental.Data.interfaces;
 using FribergCarRental.Models;
 

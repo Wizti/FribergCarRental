@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FribergCarRental.Models
 {
-    public class Customer
+    public class Customer : User
     {
         public int Id { get; set; }
         [Required]
@@ -12,11 +12,6 @@ namespace FribergCarRental.Models
         public string LastName { get; set; }
         [Required]
         public string Phone { get; set; }
-        [Required(ErrorMessage = "Användarnamn krävs")]
-        public string UserName { get; set; }
-        [Required(ErrorMessage ="Email krävs")]
-        public string Email { get; set; }
-        [ForeignKey("Adress")]
         public int AddressId { get; set; }
         public Address Address { get; set; }
 

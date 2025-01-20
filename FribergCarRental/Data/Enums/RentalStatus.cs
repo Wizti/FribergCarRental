@@ -1,4 +1,4 @@
-﻿namespace FribergCarRental.Models
+﻿namespace FribergCarRental.Data.Enums
 {
     public enum RentalStatus
     {
