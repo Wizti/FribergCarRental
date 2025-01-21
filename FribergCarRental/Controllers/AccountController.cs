@@ -64,10 +64,10 @@ namespace FribergCarRental.Controllers
             {
                 customer.Role = Role.Customer;
                 await _accountService.AddAsync(customer);
-                User user = await _accountService.GetUserByUsernameAsync(customer.UserName);
 
-                //HttpContext.Session.SetInt32("UserId", user.CustomerId);
-                HttpContext.Session.SetString("UserName", customer.UserName);
+                User user = await _accountService.GetUserByUsernameAsync(customer.UserName);
+                HttpContext.Session.SetInt32("UserId", user.Id);
+                HttpContext.Session.SetString("UserName", user.UserName);
 
                 var selectedCarId = HttpContext.Session.GetInt32("SelectedCarId");
                 if (selectedCarId.HasValue)
@@ -99,7 +99,6 @@ namespace FribergCarRental.Controllers
             User user = isEmail
                 ? await _accountService.GetUserByEmailAsync(loginVM.Login)
                 : await _accountService.GetUserByUsernameAsync(loginVM.Login);
-            //User user = await _accountService.GetUserByUsernameAsync(customer.UserName);
 
             if (user == null || loginVM.Password != user.Password)
             {
@@ -135,8 +134,6 @@ namespace FribergCarRental.Controllers
                 ModelState.AddModelError("", "Invalid login credentials.");
                 return View(forgotPasswordVM);
             }
-
-            //User user = await _accountService.GetUserByUsernameAsync(user.UserName);
 
             ViewBag.ShowPassword = $"Ditt lösen: {user.Password}";
             return View();

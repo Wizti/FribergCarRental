@@ -1,0 +1,32 @@
+﻿@model FribergCarRental.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container login-card">
+    <form asp-action="Login" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-4">
+            <label for="Login" class="form-label">Inlogg</label>
+            <input asp-for="Login" class="form-control w-100" id="username" placeholder="Email eller Användarnamn">
+            <span asp-validation-for="Login" class="text-danger"></span>
+        </div>
+        <div class="mb-4">
+            <label for="Password" class="form-label">Lösenord</label>
+            <div class="input-group">
+                <input asp-for="Password" type="password" class="form-control" id="password" placeholder="Lösenord">
+                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <input class="btn btn-primary" type="submit" value="Logga in">
+    </form>
+</div>
+
+
+
+

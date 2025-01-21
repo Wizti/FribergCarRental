@@ -7,6 +7,7 @@
         public int Year { get; set; }
         public int Price { get; set; }
         public string Description { get; set; }
+        public bool? IsActive { get; set; }
         public virtual List<Image> Images { get; set; }
         public virtual ICollection<Rental> Rentals { get; set; }
     }

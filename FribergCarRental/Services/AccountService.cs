@@ -19,8 +19,6 @@ namespace FribergCarRental.Services
         public async Task AddAsync(Customer customer)
         {
             await _customerRepository.AddAsync(customer);
-            //customer.User.CustomerId = customer.Customer.Id;
-            //await _userRepository.AddAsync(customer.User);
         }
 
         public async Task<bool> UserExistsAsync(string email, string username)
