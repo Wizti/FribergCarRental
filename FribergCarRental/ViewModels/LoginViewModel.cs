@@ -9,6 +9,5 @@ namespace FribergCarRental.ViewModels
         public string Login { get; set; }
         [Required(ErrorMessage = "Lösenord krävs")]
         public string Password { get; set; }
-        //public bool RememberMe { get; set; }
     }
 }

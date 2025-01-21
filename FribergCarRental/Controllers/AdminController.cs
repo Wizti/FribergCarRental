@@ -1,4 +1,6 @@
-﻿using FribergCarRental.Models;
+﻿using FribergCarRental.Data.Enums;
+using FribergCarRental.Data.interfaces;
+using FribergCarRental.Models;
 using FribergCarRental.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,10 +9,28 @@ namespace FribergCarRental.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly IAccountService _accountService;
+        private readonly ICarRepository _carRepository;
+
+        public AdminController(IAccountService accountService, ICarRepository carRepository)
+        {
+            this._accountService = accountService;
+            this._carRepository = carRepository;
+        }
         // GET: AdminController
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult AdminDashboard()
+        {
+            return View();
+        }       
+
+        public IActionResult Test()
+        {
+            return Content("test");
         }
 
         // GET: AdminController/Details/5
@@ -29,32 +49,25 @@ namespace FribergCarRental.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(loginVM);
+                return View("Index");
             }
 
             bool isEmail = loginVM.Login.Contains("@");
 
-            User user = isEmail
-                ? await _accountService.GetUserByEmailAsync(loginVM.Login)
-                : await _accountService.GetUserByUsernameAsync(loginVM.Login);
+            User user = await _accountService.GetUserByEmailOrUsernameAsync(loginVM.Login, isEmail);
 
-            if (user == null || loginVM.Password != user.Password)
+            if (user == null || loginVM.Password != user.Password || user.Role != Role.Admin)
             {
-                ModelState.AddModelError("", "Invalid login credentials.");
-                return View(loginVM);
+                ModelState.AddModelError("", "Ogiltiga inloggningsuppgifter.");
+                return View("Index");
             }
 
+            HttpContext.Session.Clear();
             HttpContext.Session.SetInt32("UserId", user.Id);
             HttpContext.Session.SetString("UserName", user.UserName);
+            HttpContext.Session.SetString("UserRole", user.Role.ToString());
 
-            var selectedCarId = HttpContext.Session.GetInt32("SelectedCarId");
-            if (selectedCarId.HasValue)
-            {
-                HttpContext.Session.Remove("SelectedCarId");
-                return RedirectToAction("SelectDates", "Rental", new { carId = selectedCarId.Value });
-            }
-
-            return RedirectToAction("Success", "Account");
+            return View("AdminDashboard");
         }
 
         // POST: AdminController/Create

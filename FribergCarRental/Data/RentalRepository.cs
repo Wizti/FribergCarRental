@@ -18,6 +18,11 @@ namespace FribergCarRental.Data
             await _context.SaveChangesAsync();
         }
 
+        public async Task<List<Rental>> GetAllRentalsAsync()
+        {
+            return await _context.Rentals.ToListAsync();
+        }
+
         public async Task<List<Rental>> GetRentalsForCarAsync(int carId, DateOnly startDate, DateOnly endDate)
         {
             return await _context.Rentals

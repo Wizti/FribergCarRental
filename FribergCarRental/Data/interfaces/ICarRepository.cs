@@ -6,5 +6,6 @@ namespace FribergCarRental.Data.interfaces
     {
         Task<Car> GetByIdAsync(int id);
         Task<List<Car>> GetAllAsync();
+        void Add(Car car);
     }
 }

@@ -76,7 +76,7 @@ namespace FribergCarRental.Migrations
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("FribergCarRental.Models.Image", b =>
+            modelBuilder.Entity("FribergCarRental.Models.ImageUrl", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,7 +95,7 @@ namespace FribergCarRental.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.ToTable("Image");
+                    b.ToTable("ImageUrl");
                 });
 
             modelBuilder.Entity("FribergCarRental.Models.Rental", b =>
@@ -191,7 +191,7 @@ namespace FribergCarRental.Migrations
                     b.HasDiscriminator().HasValue("Customer");
                 });
 
-            modelBuilder.Entity("FribergCarRental.Models.Image", b =>
+            modelBuilder.Entity("FribergCarRental.Models.ImageUrl", b =>
                 {
                     b.HasOne("FribergCarRental.Models.Car", null)
                         .WithMany("Images")

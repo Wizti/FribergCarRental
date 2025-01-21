@@ -8,17 +8,15 @@ namespace FribergCarRental.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly ICustomerRepository _customerRepository;
         private readonly IUserRepository _userRepository;
 
-        public AccountService(ICustomerRepository customerRepository, IUserRepository userRepository)
+        public AccountService(IUserRepository userRepository)
         {
-            _customerRepository = customerRepository;
             _userRepository = userRepository;
         }
         public async Task AddAsync(Customer customer)
         {
-            await _customerRepository.AddAsync(customer);
+            await _userRepository.AddAsync(customer);
         }
 
         public async Task<bool> UserExistsAsync(string email, string username)
@@ -29,19 +27,31 @@ namespace FribergCarRental.Services
             return emailExists || userNameExits;
         }
 
-        public async Task<User> GetByIdAsync(int id)
+        public async Task<User> GetUserByIdAsync(int id)
         {
             return await _userRepository.GetByIdAsync(id);
         }
 
-        public async Task<User> GetUserByEmailAsync(string email)
+        public async Task<User> GetUserByEmailOrUsernameAsync(string login, bool isEmail)
         {
-            return await _userRepository.GetByEmailAsync(email);
+            if (!isEmail)
+            {
+                return await _userRepository.GetByUsernameAsync(login);
+            }
+            else
+            {
+                return await _userRepository.GetByEmailAsync(login);
+            }
         }
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
             return await _userRepository.GetByUsernameAsync(username);
+        }
+
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            return await _userRepository.GetByEmailAsync(email);
         }
     }
 }

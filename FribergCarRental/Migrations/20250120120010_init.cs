@@ -70,7 +70,7 @@ namespace FribergCarRental.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Image",
+                name: "ImageUrl",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -120,7 +120,7 @@ namespace FribergCarRental.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Image_CarId",
-                table: "Image",
+                table: "ImageUrl",
                 column: "CarId");
 
             migrationBuilder.CreateIndex(
@@ -143,7 +143,7 @@ namespace FribergCarRental.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Image");
+                name: "ImageUrl");
 
             migrationBuilder.DropTable(
                 name: "Rentals");

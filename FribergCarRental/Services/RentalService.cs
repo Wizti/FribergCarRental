@@ -54,5 +54,10 @@ namespace FribergCarRental.Services
                 rental.Status = RentalStatus.Completed;
             }
         }
+
+        public async Task<List<Rental>> GetAllRentalAsync()
+        {
+            return await _rentalRepository.GetAllRentalsAsync();
+        }
     }
 }

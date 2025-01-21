@@ -27,6 +27,11 @@ namespace FribergCarRental.Controllers
             return View();
         }
 
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         public ActionResult Logout()
         {
             HttpContext.Session.Clear();
@@ -68,6 +73,7 @@ namespace FribergCarRental.Controllers
                 User user = await _accountService.GetUserByUsernameAsync(customer.UserName);
                 HttpContext.Session.SetInt32("UserId", user.Id);
                 HttpContext.Session.SetString("UserName", user.UserName);
+                HttpContext.Session.SetString("UserRole", user.Role.Value.ToString());
 
                 var selectedCarId = HttpContext.Session.GetInt32("SelectedCarId");
                 if (selectedCarId.HasValue)
@@ -96,13 +102,11 @@ namespace FribergCarRental.Controllers
 
             bool isEmail = loginVM.Login.Contains("@");
 
-            User user = isEmail
-                ? await _accountService.GetUserByEmailAsync(loginVM.Login)
-                : await _accountService.GetUserByUsernameAsync(loginVM.Login);
+            User user = await _accountService.GetUserByEmailOrUsernameAsync(loginVM.Login, isEmail);
 
-            if (user == null || loginVM.Password != user.Password)
+            if (user == null || loginVM.Password != user.Password || user.Role == Role.Admin)
             {
-                ModelState.AddModelError("", "Invalid login credentials.");
+                ModelState.AddModelError("", "Ogiltiga inloggningsuppgifter.");
                 return View(loginVM);
             }
 
