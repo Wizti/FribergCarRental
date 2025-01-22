@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FribergCarRental.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250120120010_init")]
+    [Migration("20250122142142_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -61,6 +61,9 @@ namespace FribergCarRental.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -76,7 +79,7 @@ namespace FribergCarRental.Migrations
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("FribergCarRental.Models.ImageUrl", b =>
+            modelBuilder.Entity("FribergCarRental.Models.Image", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,7 +98,7 @@ namespace FribergCarRental.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.ToTable("ImageUrl");
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("FribergCarRental.Models.Rental", b =>
@@ -138,11 +141,6 @@ namespace FribergCarRental.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -151,20 +149,49 @@ namespace FribergCarRental.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Role")
+                    b.Property<int?>("Role")
                         .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserType")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
 
-                    b.HasDiscriminator().HasValue("User");
+                    b.HasDiscriminator<string>("UserType").HasValue("User");
 
                     b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("FribergCarRental.Models.Admin", b =>
+                {
+                    b.HasBaseType("FribergCarRental.Models.User");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Users", t =>
+                        {
+                            t.Property("FirstName")
+                                .HasColumnName("Admin_FirstName");
+
+                            t.Property("LastName")
+                                .HasColumnName("Admin_LastName");
+                        });
+
+                    b.HasDiscriminator().HasValue("Admin");
                 });
 
             modelBuilder.Entity("FribergCarRental.Models.Customer", b =>
@@ -191,7 +218,7 @@ namespace FribergCarRental.Migrations
                     b.HasDiscriminator().HasValue("Customer");
                 });
 
-            modelBuilder.Entity("FribergCarRental.Models.ImageUrl", b =>
+            modelBuilder.Entity("FribergCarRental.Models.Image", b =>
                 {
                     b.HasOne("FribergCarRental.Models.Car", null)
                         .WithMany("Images")

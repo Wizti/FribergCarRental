@@ -5,7 +5,7 @@ using System.CodeDom;
 
 namespace FribergCarRental.Controllers
 {
-    public class AdminRentalController : AdminCheckController
+    public class AdminRentalController : AdminCheckBaseController
     {
         private readonly IRentalService _rentalService;
 
@@ -68,13 +68,13 @@ namespace FribergCarRental.Controllers
             }
         }
 
-        // GET: AdminRentalController/Delete/5
+        // GET: AdminRentalController/SoftDelete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: AdminRentalController/Delete/5
+        // POST: AdminRentalController/SoftDelete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

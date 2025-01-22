@@ -42,18 +42,39 @@ namespace FribergCarRental.Data
             }            
         }
 
-        public async void UpdateAsync(Car car)
+        public async Task UpdateAsync(Car car)
         {
             _context.Cars.Update(car);
             await _context.SaveChangesAsync();
         }
 
-        public void Delete(Car car)
+        public async Task DeleteAsync(int id)
         {
+            var car = new Car { Id = id };
             _context.Cars.Remove(car);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        
+        public async Task RemoveImageAsync(int imageId)
+        {
+            var image = await _context.Images.FindAsync(imageId);
+            if (image != null)
+            {
+                _context.Images.Remove(image);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await _context.Cars.AnyAsync(i => i.Id == id);
+        }
+
+        public async Task DisableAsync(Car car)
+        {
+            car.IsActive = false;
+            await UpdateAsync(car);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace FribergCarRental.Controllers
             this._carRepository = carRepository;
         }
         // GET: CarController
-        public async Task<ActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var cars = await _carRepository.GetAllAsync();
 
@@ -32,9 +32,10 @@ namespace FribergCarRental.Controllers
         }
 
         // GET: CarController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            var car = await _carRepository.GetFullByIdAsync(id);
+            return View(car);
         }
 
         // GET: CarController/Create
@@ -79,13 +80,13 @@ namespace FribergCarRental.Controllers
             }
         }
 
-        // GET: CarController/Delete/5
+        // GET: CarController/SoftDelete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: CarController/Delete/5
+        // POST: CarController/SoftDelete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

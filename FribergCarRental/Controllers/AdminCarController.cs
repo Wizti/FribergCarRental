@@ -1,4 +1,5 @@
-﻿using FribergCarRental.Data.interfaces;
+﻿using FribergCarRental.Data;
+using FribergCarRental.Data.interfaces;
 using FribergCarRental.Models;
 using FribergCarRental.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -6,13 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FribergCarRental.Controllers
 {
-    public class AdminCarController : AdminCheckController
+    public class AdminCarController : AdminCheckBaseController
     {
         private readonly ICarRepository _carRepository;
+        private readonly IRentalRepository _rentalRepository;
 
-        public AdminCarController(ICarRepository carRepository)
+        public AdminCarController(ICarRepository carRepository, IRentalRepository rentalRepository)
         {
             this._carRepository = carRepository;
+            this._rentalRepository = rentalRepository;
         }
         // GET: AdminCarController
         public async Task<IActionResult> Index()
@@ -45,10 +48,15 @@ namespace FribergCarRental.Controllers
             return View();
         }
 
-        // GET: AdminCarController/Delete/5
-        public ActionResult Delete(int id)
+        // GET: AdminCarController/SoftDelete/5
+        public async Task<IActionResult> SoftDelete(int id)
         {
-            return View();
+            var car = await _carRepository.GetByIdAsync(id);
+            if(car == null)
+            {
+                return NotFound();
+            }
+            return View(car);
         }
 
         // POST: AdminCarController/Create
@@ -88,7 +96,7 @@ namespace FribergCarRental.Controllers
         // POST: AdminCarController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Car carModel)
+        public async Task<IActionResult> Edit(Car carModel, string? NewImageUrl)
         {
             try
             {
@@ -106,12 +114,33 @@ namespace FribergCarRental.Controllers
                     car.Description = carModel.Description;
                     car.IsActive = carModel.IsActive;
 
+                    var imageToRemove = new List<Image>();
+
                     for (int i = 0; i < car.Images.Count; i++)
                     {
-                        car.Images[i].ImageUrl = carModel.Images[i].ImageUrl;
+                        var updatedUrl = carModel.Images[i].ImageUrl;
+
+                        if(string.IsNullOrEmpty(updatedUrl))
+                        {
+                            imageToRemove.Add(car.Images[i]);
+                        }
+                        else
+                        {
+                            car.Images[i].ImageUrl = updatedUrl;
+                        }
                     }
 
-                    _carRepository.UpdateAsync(car);
+                    foreach (var image in imageToRemove)
+                    {
+                        await _carRepository.RemoveImageAsync(image.Id);
+                    }
+
+                    if (!string.IsNullOrEmpty(NewImageUrl))
+                    {
+                        car.Images.Add(new Image { ImageUrl = NewImageUrl });
+                    }
+
+                    await _carRepository.UpdateAsync(car);
                 }
                 return RedirectToAction("Index");
             }
@@ -122,14 +151,20 @@ namespace FribergCarRental.Controllers
             
         }
 
-        // POST: AdminCarController/Delete/5
+        // POST: AdminCarController/SoftDelete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> SoftDelete(Car car)
         {
             try
-            {
-                return RedirectToAction(nameof(Index));
+            {                
+                var carToDisable = await _carRepository.GetByIdAsync(car.Id);
+                if (carToDisable != null)
+                {
+                    await _carRepository.DisableAsync(carToDisable);
+                    return RedirectToAction("Index");
+                }
+                return NotFound();
             }
             catch
             {

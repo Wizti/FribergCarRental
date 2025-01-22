@@ -10,12 +10,10 @@ namespace FribergCarRental.Controllers
     public class AdminController : Controller
     {
         private readonly IAccountService _accountService;
-        private readonly ICarRepository _carRepository;
 
-        public AdminController(IAccountService accountService, ICarRepository carRepository)
+        public AdminController(IAccountService accountService)
         {
             this._accountService = accountService;
-            this._carRepository = carRepository;
         }
         // GET: AdminController
         public ActionResult Index()
@@ -106,13 +104,13 @@ namespace FribergCarRental.Controllers
             }
         }
 
-        // GET: AdminController/Delete/5
+        // GET: AdminController/SoftDelete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: AdminController/Delete/5
+        // POST: AdminController/SoftDelete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

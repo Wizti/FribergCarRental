@@ -23,7 +23,7 @@ namespace FribergCarRental.Data
             return await _context.Rentals.ToListAsync();
         }
 
-        public async Task<List<Rental>> GetRentalsForCarAsync(int carId, DateOnly startDate, DateOnly endDate)
+        public async Task<List<Rental>> GetOverlappingRentalsForCarAsync(int carId, DateOnly startDate, DateOnly endDate)
         {
             return await _context.Rentals
                 .Where(c => c.CarId == carId && ((c.RentalStart <= startDate && c.RentalEnd >= startDate) ||

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace FribergCarRental.Controllers
 {
-    public class AdminCheckController : Controller
+    public class AdminCheckBaseController : Controller
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {

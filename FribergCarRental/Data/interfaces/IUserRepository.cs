@@ -9,7 +9,7 @@ namespace FribergCarRental.Data
         Task<Customer> GetCustomerByIdAsync(int userId);
         Task<Admin> GetAdminByIdAsync(int userId);
         Task UpdateUserAsync(User user);
-        Task DeleteUserAsync(int userId);
+        Task DeleteUserAsync(User user);
         Task<IEnumerable<User>> GetAllAsync();
         Task<IEnumerable<Customer>> GetAllCustomersAsync();
         Task<User> GetByEmailAsync(string email);

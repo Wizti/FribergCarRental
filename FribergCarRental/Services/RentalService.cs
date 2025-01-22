@@ -33,7 +33,7 @@ namespace FribergCarRental.Services
 
         public async Task<bool> IsCarAvailableAsync(int carId, DateOnly startDate, DateOnly endDate)
         {
-            var rentals = await _rentalRepository.GetRentalsForCarAsync(carId, startDate, endDate);
+            var rentals = await _rentalRepository.GetOverlappingRentalsForCarAsync(carId, startDate, endDate);
             return !rentals.Any();
         }
 

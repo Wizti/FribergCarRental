@@ -4,13 +4,14 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Ändra</h1>
 
 <h4>Car</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
+            <input type="hidden" asp-for="IsActive" value="@Model.IsActive" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             
@@ -38,18 +39,18 @@
             {
                 <div class="form-group">
                     <div class="mb-2">
-                        <label asp-for="Images[@i].ImageUrl">Länk till bild</label>
+                        <label asp-for="Images[@i].ImageUrl">Länk till bild (ta bort länkadress för att ta bort bilden)</label>
                         <input asp-for="Images[@i].ImageUrl" class="form-control" />
                         <img src="@Model.Images[i].ImageUrl" alt="Image preview" class="img-thumbnail" style="max-height: 100px; max-width: 150px;" />
                     </div>                  
                     
                 </div>
             }
+            <h5>Lägg till extra bild</h5>
             <div class="form-group">
-                <label asp-for="IsActive" class="control-label"></label>
-                <input asp-for="IsActive" class="form-control" />
-                <span asp-validation-for="IsActive" class="text-danger"></span>
+                <input name="NewImageUrl" class="form-control" placeholder="Länk till bild" />
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -58,6 +59,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Tillbaka</a>
 </div>
 

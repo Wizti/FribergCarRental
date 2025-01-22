@@ -24,7 +24,7 @@ namespace FribergCarRental.Data
         }
         public async Task<Customer> GetCustomerByIdAsync(int userId)
         {
-            return await _context.Users.OfType<Customer>().FirstOrDefaultAsync(c => c.Id == userId);
+            return await _context.Users.OfType<Customer>().Include(a => a.Address).FirstOrDefaultAsync(c => c.Id == userId);
         }
 
         public async Task<Admin> GetAdminByIdAsync(int userId)
@@ -51,7 +51,7 @@ namespace FribergCarRental.Data
         public async Task<User> GetByUsernameAsync(string username)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
-        }       
+        }
 
         public async Task UpdateUserAsync(User user)
         {
@@ -59,16 +59,12 @@ namespace FribergCarRental.Data
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteUserAsync(int userId)
+        public async Task DeleteUserAsync(User user)
         {
-            var user = await GetByIdAsync(userId);
-            if (user != null)
-            {
-                _context.Users.Remove(user);
-                await _context.SaveChangesAsync();
-            }
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
         }
 
-        
+
     }
 }

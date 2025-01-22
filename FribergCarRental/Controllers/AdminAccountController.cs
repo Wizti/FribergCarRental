@@ -1,10 +1,13 @@
 ﻿using FribergCarRental.Data;
+using FribergCarRental.Data.Enums;
+using FribergCarRental.Models;
+using FribergCarRental.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FribergCarRental.Controllers
 {
-    public class AdminAccountController : AdminCheckController
+    public class AdminAccountController : AdminCheckBaseController
     {
         private readonly IUserRepository _userRepository;
 
@@ -20,15 +23,52 @@ namespace FribergCarRental.Controllers
         }
 
         // GET: AdminCustomerController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            var customer = await _userRepository.GetCustomerByIdAsync(id);
+            return View(customer);       
         }
 
         // GET: AdminCustomerController/Create
         public ActionResult Create()
         {
             return View();
+        }
+
+        // GET: AdminCustomerController/Edit/5
+        public async Task<IActionResult> Edit(int id)
+        {
+            var customer = await _userRepository.GetCustomerByIdAsync(id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            if(customer.Address == null)
+            {
+                return NotFound("Hittade inte address");
+            }
+
+            var editCustomerViewModel = new EditCustomerViewModel
+            {
+                Id = customer.Id,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                Phone = customer.Phone,
+                Street = customer.Address.Street,
+                City = customer.Address.City,
+                Postalcode = customer.Address.Postalcode,
+                UserName = customer.UserName,
+                Password = customer.Password
+            };
+            return View(editCustomerViewModel);
+        }
+
+        // GET: AdminCustomerController/SoftDelete/5
+        public async Task<IActionResult> Delete(int id)
+        {
+            var customer = await _userRepository.GetCustomerByIdAsync(id);
+            return View(customer);
         }
 
         // POST: AdminCustomerController/Create
@@ -44,42 +84,56 @@ namespace FribergCarRental.Controllers
             {
                 return View();
             }
-        }
-
-        // GET: AdminCustomerController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+        }        
 
         // POST: AdminCustomerController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(EditCustomerViewModel customerVM)
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    var customer = await _userRepository.GetCustomerByIdAsync(customerVM.Id);
+                    if (customer == null)
+                    {
+                        return NotFound();
+                    }
+
+                    customer.FirstName = customerVM.FirstName;
+                    customer.LastName = customerVM.LastName;
+                    customer.Phone = customerVM.Phone;
+                    customer.Address.Street = customerVM.Street;
+                    customer.Address.Postalcode = customerVM.Postalcode;
+                    customer.Address.City = customerVM.City;
+                    customer.UserName = customerVM.UserName;
+                    customer.Password = customerVM.Password;
+
+                    await _userRepository.UpdateUserAsync(customer);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(customerVM);
             }
-        }
+        }        
 
-        // GET: AdminCustomerController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AdminCustomerController/Delete/5
+        // POST: AdminCustomerController/SoftDelete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(Customer customer)
         {
             try
             {
+                var userToDelete = await _userRepository.GetByIdAsync(customer.Id);
+                if (userToDelete == null)
+                {
+                    return NotFound();
+                }
+                await _userRepository.DeleteUserAsync(userToDelete);
+
                 return RedirectToAction(nameof(Index));
             }
             catch

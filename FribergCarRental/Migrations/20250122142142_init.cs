@@ -35,7 +35,8 @@ namespace FribergCarRental.Migrations
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,8 +52,10 @@ namespace FribergCarRental.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    Role = table.Column<int>(type: "int", nullable: true),
+                    UserType = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    Admin_FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Admin_LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -70,7 +73,7 @@ namespace FribergCarRental.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ImageUrl",
+                name: "Images",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -80,9 +83,9 @@ namespace FribergCarRental.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Image", x => x.Id);
+                    table.PrimaryKey("PK_Images", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Image_Cars_CarId",
+                        name: "FK_Images_Cars_CarId",
                         column: x => x.CarId,
                         principalTable: "Cars",
                         principalColumn: "Id",
@@ -119,8 +122,8 @@ namespace FribergCarRental.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Image_CarId",
-                table: "ImageUrl",
+                name: "IX_Images_CarId",
+                table: "Images",
                 column: "CarId");
 
             migrationBuilder.CreateIndex(
@@ -143,7 +146,7 @@ namespace FribergCarRental.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ImageUrl");
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Rentals");

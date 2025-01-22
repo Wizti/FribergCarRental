@@ -1,11 +1,12 @@
 ﻿@model FribergCarRental.Models.Car
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "SoftDelete";
 }
 
-<h1>Detaljer</h1>
+<h1>Inaktivera</h1>
 
+<h3>Är du säker på att du vill inaktivera denna bil?</h3>
 <div>
     <h4>Car</h4>
     <hr />
@@ -41,8 +42,10 @@
             @Html.DisplayFor(model => model.IsActive)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Ändra</a> |
-    <a asp-action="Index">Tillbaka</a>
+    
+    <form asp-action="SoftDelete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="SoftDelete" class="btn btn-danger" /> |
+        <a asp-action="Index">Tillbaka</a>
+    </form>
 </div>

@@ -12,6 +12,7 @@ namespace FribergCarRental.Data
         public DbSet<User> Users { get; set; }       
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Car> Cars { get; set; }
+        public DbSet<Image> Images { get; set; }    
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,5 +22,6 @@ namespace FribergCarRental.Data
                 .HasValue<Admin>("Admin")
                 .HasValue<Customer>("Customer");
         }
+        public DbSet<FribergCarRental.Models.Customer> Customer { get; set; } = default!;
     }
 }

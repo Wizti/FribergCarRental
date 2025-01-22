@@ -12,24 +12,28 @@
     <div class="row justify-content-center">
         @foreach (var item in Model)
         {
-            foreach (var image in item.Images)
+            if (item.IsActive == true)
             {
+                var firstImage = item.Images.FirstOrDefault();
                 <div class="col-sm-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch">
                     <div class="card" style="width: 100%;">
-                        <img src="@image.ImageUrl" class="card-img-top" alt="@item.Model">
-                        <div class="card-body">
-                            <h5 class="card-title">@item.Model - @item.Year</h5>
-                            <p class="card-text">@item.Description</p>
-                            <p><strong>@item.Price</strong> kr/dygn</p>
+                    <img src="@firstImage?.ImageUrl" class="card-img-top" alt="@item.Model">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Model - @item.Year</h5>
+                        <p class="card-text">@item.Description</p>
+                        <p><strong>@item.Price</strong> kr/dygn</p>
 
-                            <form asp-controller="Car" asp-action="RentCar" method="get">
-                                <input type="hidden" name="carId" value="@item.Id" />
-                                <button type="submit" class="btn btn-primary">Boka</button>
-                            </form>
-                        </div>
+                        <form asp-controller="Car" asp-action="RentCar" method="get">
+                            <input type="hidden" name="carId" value="@item.Id" />
+                            <button type="submit" class="btn btn-primary">Boka</button>
+                        </form>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Detaljer</a>
+
                     </div>
                 </div>
+            </div>
             }
         }
+
     </div>
 </div>
