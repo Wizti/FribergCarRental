@@ -18,17 +18,22 @@ namespace FribergCarRental.Data
             return await _context.Cars.FindAsync(id);
         }
 
+        public async Task<Car> GetFullByIdAsync(int id)
+        {
+            return await _context.Cars.Include(i => i.Images).FirstOrDefaultAsync(c => c.Id == id);
+        }
+
         public async Task<List<Car>> GetAllAsync()
         {
             return  await _context.Cars.Include(i => i.Images).ToListAsync();
         }
 
-        public void Add(Car car)
+        public async Task AddAsync(Car car)
         {
             try
             {
-                _context.Cars.Add(car);
-                _context.SaveChanges();
+                await _context.Cars.AddAsync(car);
+                await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -36,5 +41,19 @@ namespace FribergCarRental.Data
                 throw;
             }            
         }
+
+        public async void UpdateAsync(Car car)
+        {
+            _context.Cars.Update(car);
+            await _context.SaveChangesAsync();
+        }
+
+        public void Delete(Car car)
+        {
+            _context.Cars.Remove(car);
+            _context.SaveChanges();
+        }
+
+        
     }
 }

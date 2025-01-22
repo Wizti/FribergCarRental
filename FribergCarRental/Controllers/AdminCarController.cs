@@ -19,16 +19,34 @@ namespace FribergCarRental.Controllers
         {
             var cars = await _carRepository.GetAllAsync();
             return View(cars);
-        }  
+        }
 
         // GET: AdminCarController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
+        {
+            var car = await _carRepository.GetByIdAsync(id);
+            return View(car);
+        }
+
+        // GET: AdminCarController/Edit/5
+        public async Task<IActionResult> Edit(int id)
+        {
+            var car = await _carRepository.GetFullByIdAsync(id);
+            if (car == null)
+            {
+                return NotFound();
+            }
+            return View(car);
+        }
+
+        // GET: AdminCarController/Create
+        public IActionResult Create()
         {
             return View();
         }
 
-        // GET: AdminCarController/Create
-        public ActionResult Create()
+        // GET: AdminCarController/Delete/5
+        public ActionResult Delete(int id)
         {
             return View();
         }
@@ -36,7 +54,7 @@ namespace FribergCarRental.Controllers
         // POST: AdminCarController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CreateCarViewModel createCarVM)
+        public async Task<IActionResult> Create(CreateCarViewModel createCarVM)
         {
             try
             {
@@ -51,52 +69,57 @@ namespace FribergCarRental.Controllers
                         IsActive = createCarVM.IsActive,
 
                         Images = new List<Image>()
-                        { 
+                        {
                             new Image { ImageUrl = createCarVM.ImageUrl }
                         }
                     };
-                    _carRepository.Add(car);
+                    await _carRepository.AddAsync(car);
                     return Content("Fungerar");
                 }
                 return View();
-                
+
             }
             catch
             {
                 return View();
             }
-        }
-
-        // GET: AdminCarController/Edit/5
-        public async Task<IActionResult> Edit(int id)
-        {
-            var car = await _carRepository.GetByIdAsync(id);
-            if(car == null)
-            {
-                return NotFound();
-            }
-            return View(car);
         }
 
         // POST: AdminCarController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(Car carModel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    var car = await _carRepository.GetFullByIdAsync(carModel.Id);
+                    if (car == null)
+                    {
+                        return NotFound();
+                    }
+
+                    car.Model = carModel.Model;
+                    car.Year = carModel.Year;
+                    car.Price = carModel.Price;
+                    car.Description = carModel.Description;
+                    car.IsActive = carModel.IsActive;
+
+                    for (int i = 0; i < car.Images.Count; i++)
+                    {
+                        car.Images[i].ImageUrl = carModel.Images[i].ImageUrl;
+                    }
+
+                    _carRepository.UpdateAsync(car);
+                }
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(carModel);
             }
-        }
-
-        // GET: AdminCarController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+            
         }
 
         // POST: AdminCarController/Delete/5
