@@ -12,7 +12,7 @@
         <div class="text-details" style="flex: 1; max-width: 25%;">
             <p><strong>Beskrivning:</strong> @Model.Description</p>
             <p><strong>Pris:</strong> @Model.Price kr/dygn</p>
-            <p><strong>Status:</strong> @(Model.IsActive == true ? "Tillgänglig" : "Ej Tillgänglig")</p>
+            <p><strong>Status:</strong> @(Model.IsActive == true ? "Tillgänglig" : "Uthyrd")</p>
             <form asp-controller="Car" asp-action="RentCar" method="get">
                 <input type="hidden" name="carId" value="@Model.Id" />
                 <button type="submit" class="btn btn-primary">Boka</button>
@@ -48,5 +48,5 @@
 </div>
 
 <div>
-    <a asp-action="Index">Tillbaka till alla bilar</a>
+    <a asp-action="Index">Tillbaka till bilar</a>
 </div>

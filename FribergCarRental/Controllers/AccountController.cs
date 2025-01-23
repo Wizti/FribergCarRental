@@ -112,6 +112,7 @@ namespace FribergCarRental.Controllers
 
             HttpContext.Session.SetInt32("UserId", user.Id);
             HttpContext.Session.SetString("UserName", user.UserName);
+            HttpContext.Session.SetString("UserRole", user.Role.ToString());
 
             var selectedCarId = HttpContext.Session.GetInt32("SelectedCarId");
             if (selectedCarId.HasValue)

@@ -62,3 +62,10 @@
             </div>
         </form>
     </div>
+    <div>
+        <a asp-action="SelectDates" asp-controller="Rental"
+           asp-route-CarId="@Model.CarId"
+           asp-route-StartDate="@Model.StartDate.ToString("yyyy-MM-dd")"
+           asp-route-EndDate="@Model.EndDate.ToString("yyyy-MM-dd")"
+           class="btn btn-secondary">Tillbaka</a>
+    </div>

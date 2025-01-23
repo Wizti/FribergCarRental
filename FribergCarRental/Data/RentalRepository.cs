@@ -46,5 +46,10 @@ namespace FribergCarRental.Data
             _context.Rentals.Remove(rental);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<Rental>> GetAllCustomerRentalsAsync(int? customerId)
+        {
+            return await _context.Rentals.Include(c => c.Car).Where(u => u.CustomerId == customerId).ToListAsync();
+        }
     }
 }
