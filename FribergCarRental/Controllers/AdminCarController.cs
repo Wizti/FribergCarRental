@@ -74,7 +74,7 @@ namespace FribergCarRental.Controllers
                         Year = createCarVM.Year,
                         Price = createCarVM.Price,
                         Description = createCarVM.Description,
-                        IsActive = createCarVM.IsActive,
+                        IsActive = true,
 
                         Images = new List<Image>()
                         {
@@ -82,9 +82,9 @@ namespace FribergCarRental.Controllers
                         }
                     };
                     await _carRepository.AddAsync(car);
-                    return Content("Fungerar");
+                    return RedirectToAction("Index");
                 }
-                return View();
+                return View(createCarVM);
 
             }
             catch

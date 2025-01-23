@@ -20,7 +20,6 @@ namespace FribergCarRental.Controllers
             {
                 return View(cars);
             }
-
             return View();
         }
 
@@ -39,6 +38,7 @@ namespace FribergCarRental.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var car = await _carRepository.GetFullByIdAsync(id);
+
             return View(car);
         }
 

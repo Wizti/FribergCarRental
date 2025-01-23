@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FribergCarRental.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250122142142_init")]
+    [Migration("20250123142330_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -91,7 +91,6 @@ namespace FribergCarRental.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
