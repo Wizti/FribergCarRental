@@ -21,6 +21,11 @@ namespace FribergCarRental.Services
             await _rentalRepository.AddAsync(rental);
         }
 
+        public async Task<Rental> GetRentalAsync(int rentalId)
+        {
+            return await _rentalRepository.GetFullRentalByIdAsync(rentalId);
+        }
+
         public async Task<Car> GetCarByIdAsync(int carId)
         {
             return await _carRepository.GetByIdAsync(carId);
@@ -60,7 +65,18 @@ namespace FribergCarRental.Services
 
         public async Task<List<Rental>> GetAllRentalAsync()
         {
-            return await _rentalRepository.GetAllRentalsAsync();
+            var rentals = await _rentalRepository.GetAllRentalsAsync();
+
+            foreach (var rental in rentals)
+            {
+                UpdateRentalStatus(rental);
+            }
+            return rentals;
+        }
+
+        public async Task<Rental> GetFullRentalAsync(int rentalId)
+        {
+            return await _rentalRepository.GetFullRentalByIdAsync(rentalId);
         }
     }
 }

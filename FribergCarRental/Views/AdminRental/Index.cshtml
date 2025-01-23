@@ -54,8 +54,11 @@
                     @Html.DisplayFor(modelItem => item.Rental.Customer.LastName)
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Rental.Id">Detaljer</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Rental.Id">Ta Bort</a>
+                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Rental.Id">Detaljer</a> |
+                    @if (item.Rental.Status == FribergCarRental.Data.Enums.RentalStatus.Upcoming)
+                    {
+                        <a class="btn btn-primary" asp-action="Delete" asp-route-id="@item.Rental.Id">Ta Bort</a>
+                    }
                 </td>
             </tr>
         }

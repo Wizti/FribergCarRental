@@ -1,4 +1,6 @@
-﻿using FribergCarRental.Data.interfaces;
+﻿using FribergCarRental.Data;
+using FribergCarRental.Data.interfaces;
+using FribergCarRental.Models;
 using FribergCarRental.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +11,12 @@ namespace FribergCarRental.Controllers
     public class AdminRentalController : AdminCheckBaseController
     {
         private readonly IRentalService _rentalService;
+        private readonly IRentalRepository _rentalRepository;
 
-        public AdminRentalController(IRentalService rentalService)
+        public AdminRentalController(IRentalService rentalService, IRentalRepository rentalRepository)
         {
             this._rentalService = rentalService;
+            this._rentalRepository = rentalRepository;
         }
         // GET: AdminRentalController
         public async Task<IActionResult> Index()
@@ -29,9 +33,31 @@ namespace FribergCarRental.Controllers
         }
 
         // GET: AdminRentalController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            var rental = await _rentalRepository.GetFullRentalByIdAsync(id);
+            if (rental == null)
+            {
+                return NotFound();
+            }
+
+            var rentalVM = new RentalRecordViewModel
+            {
+                Rental = rental,
+                TotalPrice = await _rentalService.CalculateTotalPriceAsync(rental.RentalStart, rental.RentalEnd, rental.CarId)
+            };
+            return View(rentalVM);
+        }
+
+        // GET: AdminRentalController/SoftDelete/5
+        public async Task<IActionResult> Delete(int id)
+        {
+            var rental = await _rentalRepository.GetByIdAsync(id);
+            if (rental == null)
+            {
+                return NotFound();
+            }
+            return View(rental);
         }
 
         // GET: AdminRentalController/Create
@@ -76,19 +102,21 @@ namespace FribergCarRental.Controllers
             }
         }
 
-        // GET: AdminRentalController/SoftDelete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        
 
         // POST: AdminRentalController/SoftDelete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(Rental rental)
         {
             try
             {
+                var rentalToDelete = await _rentalRepository.GetByIdAsync(rental.Id);
+                if (rentalToDelete != null)
+                {
+                    await _rentalRepository.DeleteAsync(rentalToDelete);
+                    return RedirectToAction(nameof(Index));
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch

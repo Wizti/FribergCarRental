@@ -1,0 +1,60 @@
+﻿@model FribergCarRental.ViewModels.RentalViewModel
+
+@{
+    ViewData["Title"] = "ConfirmRental";
+}
+
+<h1>ConfirmRental</h1>
+
+<div>
+    <h4>Rental</h4>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Model)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Price)
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <div>
+        <form method="post" asp-controller="Rental" asp-action="ConfirmRental">
+            <input type="hidden" asp-for="Model" value="@Model.Model" />
+            <input type="hidden" asp-for="StartDate" value="@Model.StartDate" />
+            <input type="hidden" asp-for="EndDate" value="@Model.EndDate" />
+            <input type="hidden" asp-for="Price" value="@Model.Price" />
+            <input type="hidden" asp-for="CarId" value="@Model.CarId" />
+
+            <div class="form-group">
+                <input type="submit" value="Boka" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>

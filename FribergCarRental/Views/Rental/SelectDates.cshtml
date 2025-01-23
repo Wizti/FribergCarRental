@@ -29,7 +29,7 @@
         <div>
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         </div>
-        <form method="post" asp-controller="Rental" asp-action="ConfirmRental">
+        <form method="post" asp-controller="Rental" asp-action="SelectDates">
             <input type="hidden" asp-for="CarId" value="@Model.CarId" />
             <input type="hidden" asp-for="Model" value="@Model.Model" />
             <input type="hidden" asp-for="Price" value="@Model.Price" />

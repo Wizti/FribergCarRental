@@ -30,5 +30,21 @@ namespace FribergCarRental.Data
                 (c.RentalStart <= endDate && c.RentalEnd >= endDate) ||
                 (c.RentalStart >= startDate && c.RentalEnd <= endDate))).ToListAsync();
         }
+
+        public async Task<Rental> GetFullRentalByIdAsync(int rentalId)
+        {
+            return await _context.Rentals.Include(c => c.Car).Include(u => u.Customer).FirstOrDefaultAsync(r => r.Id == rentalId);
+        }
+
+        public async Task<Rental> GetByIdAsync(int rentalId)
+        {
+            return await _context.Rentals.FirstOrDefaultAsync(i => i.Id == rentalId);
+        }
+
+        public async Task DeleteAsync(Rental rental)
+        {
+            _context.Rentals.Remove(rental);
+            await _context.SaveChangesAsync();
+        }
     }
 }

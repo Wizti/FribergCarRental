@@ -36,6 +36,11 @@ namespace FribergCarRental.Controllers
             return View(rentalViewModel);
         }
 
+        public IActionResult ConfirmRental()
+        {
+            return View();
+        }
+
         public ActionResult RentalSuccess()
         {
             return View();
@@ -59,7 +64,7 @@ namespace FribergCarRental.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ConfirmRental(RentalViewModel rentalVM)
+        public async Task<IActionResult> SelectDates(RentalViewModel rentalVM)
         {
             var customerId = HttpContext.Session.GetInt32("UserId");
 
@@ -85,6 +90,30 @@ namespace FribergCarRental.Controllers
             {
                 ModelState.AddModelError("", "Bilen är tyvärr inte tillgänglig från och till det datumet du valde.");
                 return View("SelectDates", rentalVM);
+            }
+
+            /*var rental = new Rental
+            {
+                CarId = rentalVM.CarId,
+                CustomerId = customerId.Value,
+                RentalStart = rentalVM.StartDate,
+                RentalEnd = rentalVM.EndDate
+            };*/
+
+            //await _rentalService.CreateRentalAsync(rental);
+
+            return View("ConfirmRental", rentalVM);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmRental(RentalViewModel rentalVM)
+        {
+            var customerId = HttpContext.Session.GetInt32("UserId");
+
+            if (customerId == null)
+            {
+                RedirectToAction("Login", "Account");
             }
 
             var rental = new Rental
