@@ -45,8 +45,12 @@
 
         </tbody>
     </table>
+
     <div>
-        <form method="post" asp-controller="Rental" asp-action="ConfirmRental">
+        <h4>Totalt pris: @(ViewBag.TotalPrice ?? "Price not available") </h4>
+    </div>
+    <div>
+        <form method="post" asp-controller="Rental" asp-action="Create">
             <input type="hidden" asp-for="Model" value="@Model.Model" />
             <input type="hidden" asp-for="StartDate" value="@Model.StartDate" />
             <input type="hidden" asp-for="EndDate" value="@Model.EndDate" />

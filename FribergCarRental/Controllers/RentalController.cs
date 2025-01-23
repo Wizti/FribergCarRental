@@ -36,9 +36,19 @@ namespace FribergCarRental.Controllers
             return View(rentalViewModel);
         }
 
-        public IActionResult ConfirmRental()
+        [HttpGet]
+        public async Task<IActionResult> ConfirmRental(RentalViewModel rentalVM)
         {
-            return View();
+            if(rentalVM == null)
+            {
+                return RedirectToAction("SelectDates");
+            }
+
+            var totalPrice = await _rentalService.CalculateTotalPriceAsync(rentalVM.StartDate, rentalVM.EndDate, rentalVM.CarId);
+            
+            ViewBag.TotalPrice = totalPrice;
+
+            return View(rentalVM);
         }
 
         public ActionResult RentalSuccess()
@@ -92,52 +102,35 @@ namespace FribergCarRental.Controllers
                 return View("SelectDates", rentalVM);
             }
 
-            /*var rental = new Rental
-            {
-                CarId = rentalVM.CarId,
-                CustomerId = customerId.Value,
-                RentalStart = rentalVM.StartDate,
-                RentalEnd = rentalVM.EndDate
-            };*/
-
-            //await _rentalService.CreateRentalAsync(rental);
-
-            return View("ConfirmRental", rentalVM);
-
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> ConfirmRental(RentalViewModel rentalVM)
-        {
-            var customerId = HttpContext.Session.GetInt32("UserId");
-
-            if (customerId == null)
-            {
-                RedirectToAction("Login", "Account");
-            }
-
-            var rental = new Rental
-            {
-                CarId = rentalVM.CarId,
-                CustomerId = customerId.Value,
-                RentalStart = rentalVM.StartDate,
-                RentalEnd = rentalVM.EndDate
-            };
-
-            await _rentalService.CreateRentalAsync(rental);
-
-            return View("RentalSuccess", rentalVM);
+            return RedirectToAction("ConfirmRental", rentalVM);
 
         }
 
         // POST: RentalController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(RentalViewModel rentalVM)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var customerId = HttpContext.Session.GetInt32("UserId");
+
+                if (customerId == null)
+                {
+                    RedirectToAction("Login", "Account");
+                }
+
+                var rental = new Rental
+                {
+                    CarId = rentalVM.CarId,
+                    CustomerId = customerId.Value,
+                    RentalStart = rentalVM.StartDate,
+                    RentalEnd = rentalVM.EndDate
+                };
+
+                await _rentalService.CreateRentalAsync(rental);
+
+                return View("RentalSuccess", rentalVM);
             }
             catch
             {
@@ -186,22 +179,5 @@ namespace FribergCarRental.Controllers
                 return View();
             }
         }
-
-        // helper method
-        /*private async Task<IActionResult> PopulateSelectDatesView(RentalViewModel rentalVM)
-        {
-            var car = await _rentalService.GetCarByIdAsync(rentalVM.CarId);
-
-            if (car == null)
-            {
-                return NotFound();
-            }
-
-            rentalVM.Description = car.Description;
-            rentalVM.Model = car.Model;
-            rentalVM.Price = car.Price;
-
-            return View("SelectDates", rentalVM);
-        }*/
     }
 }
