@@ -16,6 +16,5 @@ namespace FribergCarRental.Models
         public Address Address { get; set; }
 
         public virtual ICollection<Rental>? Rentals { get; set; }
-
     }
 }

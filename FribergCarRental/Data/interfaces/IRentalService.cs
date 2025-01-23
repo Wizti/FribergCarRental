@@ -9,5 +9,6 @@ namespace FribergCarRental.Data.interfaces
         void UpdateRentalStatus(Rental rental);
         Task<bool> IsCarAvailableAsync(int carId, DateOnly startDate, DateOnly endDate);
         Task<List<Rental>> GetAllRentalAsync();
+        Task<decimal> CalculateTotalPriceAsync(DateOnly startDate, DateOnly endDate, int carId);
     }
 }

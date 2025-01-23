@@ -20,7 +20,7 @@ namespace FribergCarRental.Data
 
         public async Task<List<Rental>> GetAllRentalsAsync()
         {
-            return await _context.Rentals.ToListAsync();
+            return await _context.Rentals.Include(c => c.Car).Include(u => u.Customer).ToListAsync();
         }
 
         public async Task<List<Rental>> GetOverlappingRentalsForCarAsync(int carId, DateOnly startDate, DateOnly endDate)

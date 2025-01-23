@@ -1,4 +1,5 @@
 ﻿using FribergCarRental.Data.interfaces;
+using FribergCarRental.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.CodeDom;
@@ -17,7 +18,14 @@ namespace FribergCarRental.Controllers
         public async Task<IActionResult> Index()
         {
             var rentals = await _rentalService.GetAllRentalAsync();
-            return View(rentals);
+
+            var rentalRecords = await Task.WhenAll(rentals.Select(async r => new RentalRecordViewModel
+            {
+                Rental = r,
+                TotalPrice = await _rentalService.CalculateTotalPriceAsync(r.RentalStart, r.RentalEnd, r.CarId)
+            }));
+
+            return View(rentalRecords);
         }
 
         // GET: AdminRentalController/Details/5

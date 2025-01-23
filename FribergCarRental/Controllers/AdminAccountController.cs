@@ -1,5 +1,6 @@
 ﻿using FribergCarRental.Data;
 using FribergCarRental.Data.Enums;
+using FribergCarRental.Data.interfaces;
 using FribergCarRental.Models;
 using FribergCarRental.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -10,10 +11,12 @@ namespace FribergCarRental.Controllers
     public class AdminAccountController : AdminCheckBaseController
     {
         private readonly IUserRepository _userRepository;
+        private readonly IAccountService _accountService;
 
-        public AdminAccountController(IUserRepository userRepository)
+        public AdminAccountController(IUserRepository userRepository, IAccountService accountService)
         {
             this._userRepository = userRepository;
+            this._accountService = accountService;
         }
         // GET: AdminCustomerController
         public async Task<IActionResult> Index()
@@ -74,10 +77,24 @@ namespace FribergCarRental.Controllers
         // POST: AdminCustomerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(Customer customer)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(customer);
+            }
+
+            if (await _accountService.UserExistsAsync(customer.Email, customer.UserName))
+            {
+                ModelState.AddModelError("", "Email eller Användarnamn är upptaget");
+                return View(customer);
+            }
+
             try
             {
+                customer.Role = Role.Customer;
+                await _userRepository.AddAsync(customer);
+
                 return RedirectToAction(nameof(Index));
             }
             catch

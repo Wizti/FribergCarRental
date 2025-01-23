@@ -17,11 +17,6 @@ namespace FribergCarRental.Services
         }
         public async Task CreateRentalAsync(Rental rental)
         {
-            if (rental.RentalStart >= rental.RentalEnd)
-            {
-                throw new ArgumentException("Startdatum måste vara tidigare än slutdatum.");
-            }
-
             UpdateRentalStatus(rental);
             await _rentalRepository.AddAsync(rental);
         }
@@ -53,6 +48,14 @@ namespace FribergCarRental.Services
             {
                 rental.Status = RentalStatus.Completed;
             }
+        }
+
+        public async Task<decimal> CalculateTotalPriceAsync(DateOnly startDate, DateOnly endDate, int carId)
+        {
+            var car = await GetCarByIdAsync(carId);
+            var totalDays = (endDate.ToDateTime(new TimeOnly()) - startDate.ToDateTime(new TimeOnly())).Days;
+
+            return totalDays * car.Price;
         }
 
         public async Task<List<Rental>> GetAllRentalAsync()
