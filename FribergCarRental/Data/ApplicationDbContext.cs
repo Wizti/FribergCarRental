@@ -21,7 +21,6 @@ namespace FribergCarRental.Data
                 .HasValue<User>("User")
                 .HasValue<Admin>("Admin")
                 .HasValue<Customer>("Customer");
-        }
-        public DbSet<FribergCarRental.Models.Customer> Customer { get; set; } = default!;
+        }        
     }
 }
