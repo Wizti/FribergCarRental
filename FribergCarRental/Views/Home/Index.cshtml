@@ -1,8 +1,46 @@
-﻿@{
+﻿@* @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Välkommen</h1>
     <img src="/images/BigLogo.png" class="img-fluid" alt="Responsive image" width="300" height="300" />
+</div> *@
+@{
+    ViewData["Title"] = "Startsida";
+}
+
+<div class="container text-center mt-5">
+    <div class="row align-items-center justify-content-center">
+    <div class="col-lg-6 d-flex justify-content-center align-items-center">
+        <img src="/images/BigLogo.png" class="img-fluid rounded" alt="Friberg Car Rentals" width="300" height="300" />
+    </div>
+    </div>
+    <p class="lead mt-4">
+        När passion för exklusiva bilar möter entreprenörskap.
+    </p>
 </div>
+
+<div class="container mt-5">
+    <div class="row align-items-center justify-content-center">
+        
+        <div class="col-lg-6">
+            <h3>Historien bakom företaget</h3>
+            <p class="mt-3">
+                IT-gurun och superentreprenören <strong>Marcus Friberg</strong> är mannen bakom Friberg Car Rentals AB.
+                Efter att ha fyllt gården med en samling exklusiva bilar beslutade han sig för att kombinera sin
+                passion för bilar med sitt sinne för affärer. Familjen, med sambon Maria och barnen Malte och Malin,
+                kanske inte delar Marcus entusiasm, men de står bakom hans kreativa lösningar!
+            </p>
+            <p>
+                Genom att starta Friberg Car Rentals AB kan nu Marcus dela sin kärlek för exklusiva bilar med andra bilälskare.
+                Här hittar du de mest unika bilarna för uthyrning – allt från sportbilar till lyxiga cruisers.
+            </p>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-light text-muted text-center mt-5 p-3 border-top">
+    <p>&copy; 2025 - Friberg Car Rentals AB | <a asp-area="" asp-controller="Home" asp-action="Privacy">Integritetspolicy</a></p>
+</footer>
+
