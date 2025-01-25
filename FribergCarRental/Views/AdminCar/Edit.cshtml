@@ -6,7 +6,6 @@
 
 <h1>Ändra</h1>
 
-<h4>Car</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -39,7 +38,7 @@
             {
                 <div class="form-group">
                     <div class="mb-2">
-                        <label asp-for="Images[@i].ImageUrl">Länk till bild (ta bort länkadress för att ta bort bilden)</label>
+                        <label asp-for="Images[@i].ImageUrl">Länk till bild (ta bort bildlänk för att ta bort bilden)</label>
                         <input asp-for="Images[@i].ImageUrl" class="form-control" />
                         <img src="@Model.Images[i].ImageUrl" alt="Image preview" class="img-thumbnail" style="max-height: 100px; max-width: 150px;" />
                     </div>                  

@@ -4,10 +4,9 @@
     ViewData["Title"] = "ConfirmRental";
 }
 
-<h1>ConfirmRental</h1>
+<h1>Bekräfta bokning</h1>
 
 <div>
-    <h4>Rental</h4>
     <hr />
     <table class="table">
         <thead>
@@ -47,7 +46,7 @@
     </table>
 
     <div>
-        <h4>Totalt pris: @(ViewBag.TotalPrice ?? "Price not available") </h4>
+        <h4><strong>Totalt pris: @(ViewBag.TotalPrice ?? "Price not available") </strong></h4>
     </div>
     <div>
         <form method="post" asp-controller="Rental" asp-action="Create">
@@ -69,3 +68,4 @@
            asp-route-EndDate="@Model.EndDate.ToString("yyyy-MM-dd")"
            class="btn btn-secondary">Tillbaka</a>
     </div>
+</div>

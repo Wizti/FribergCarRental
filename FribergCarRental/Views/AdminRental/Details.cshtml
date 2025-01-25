@@ -7,7 +7,7 @@
 <h1>Detaljer</h1>
 
 <div>
-    <h4>Rental</h4>
+    <h4>@Html.DisplayNameFor(model => model.Rental.CustomerId): @Html.DisplayFor(model => model.Rental.CustomerId)</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -39,13 +39,7 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TotalPrice)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Rental.CustomerId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Rental.CustomerId)
-        </dd>
+        </dd>        
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Rental.Customer.FirstName)
         </dt>
@@ -63,6 +57,12 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Rental.Customer.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Rental.CustomerId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Rental.CustomerId)
         </dd>
     </dl>
 </div>
