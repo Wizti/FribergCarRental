@@ -12,7 +12,7 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Model)
+                    @Html.DisplayNameFor(model => model.Car.Model)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.StartDate)
@@ -21,7 +21,7 @@
                     @Html.DisplayNameFor(model => model.EndDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Price)
+                    @Html.DisplayNameFor(model => model.Car.Price)
                 </th>
                 <th></th>
             </tr>
@@ -29,7 +29,7 @@
         <tbody>
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => Model.Model)
+                    @Html.DisplayFor(modelItem => Model.Car.Model)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => Model.StartDate)
@@ -38,7 +38,7 @@
                     @Html.DisplayFor(modelItem => Model.EndDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => Model.Price)
+                    @Html.DisplayFor(modelItem => Model.Car.Price)
                 </td>
             </tr>
 
@@ -50,11 +50,11 @@
     </div>
     <div>
         <form method="post" asp-controller="Rental" asp-action="Create">
-            <input type="hidden" asp-for="Model" value="@Model.Model" />
+            <input type="hidden" asp-for="Car.Model" value="@Model.Car.Model" />
             <input type="hidden" asp-for="StartDate" value="@Model.StartDate" />
             <input type="hidden" asp-for="EndDate" value="@Model.EndDate" />
-            <input type="hidden" asp-for="Price" value="@Model.Price" />
-            <input type="hidden" asp-for="CarId" value="@Model.CarId" />
+            <input type="hidden" asp-for="Car.Price" value="@Model.Car.Price" />
+            <input type="hidden" asp-for="Car.Id" value="@Model.Car.Id" />
 
             <div class="form-group">
                 <input type="submit" value="Boka" class="btn btn-primary" />
@@ -63,7 +63,7 @@
     </div>
     <div>
         <a asp-action="SelectDates" asp-controller="Rental"
-           asp-route-CarId="@Model.CarId"
+           asp-route-CarId="@Model.Car.Id"
            asp-route-StartDate="@Model.StartDate.ToString("yyyy-MM-dd")"
            asp-route-EndDate="@Model.EndDate.ToString("yyyy-MM-dd")"
            class="btn btn-secondary">Tillbaka</a>

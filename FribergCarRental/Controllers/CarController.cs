@@ -27,11 +27,11 @@ namespace FribergCarRental.Controllers
         {
             if (HttpContext.Session.GetString("UserId") == null)
             {
-                HttpContext.Session.SetInt32("SelectedCarId", carId);
-                return RedirectToAction("Login", "Account");
+                var returnUrl = Url.Action("SelectDates", "Rental");
+                return RedirectToAction("Login", "Account", new { returnUrl });
             }
 
-            return RedirectToAction("SelectDates", "Rental", new { carId });
+            return RedirectToAction("SelectDates", "Rental");
         }
 
         // GET: CarController/Details/5

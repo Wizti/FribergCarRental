@@ -1,4 +1,4 @@
-﻿@{
+﻿@* @{
     ViewData["Title"] = "AdminDashboard";
 }
 
@@ -37,41 +37,54 @@
             </div>
         </div>
     </div>
-</div>
-@* <div class="row justify-content-center">
-    <div class="col-lg-4 col-md-4 mb-4 d-flex">
-        <div class="card">
+</div> *@
+
+@{
+    ViewData["Title"] = "AdminDashboard";
+}
+
+<h1 class="text-center mb-4">Admin Dashboard</h1>
+
+<div class="row justify-content-center">
+    <div class="col-sm-6 col-md-4 col-lg-3 mb-4 d-flex ">
+        <div class="card h-100 flex-grow-1">
+            <!-- Added h-100 to make cards equal height -->
             <img src="https://bucket-image.inkmaginecms.com/version/desktop/cabinet/2023/05/5bd0aded-768b-40da-ae1c-47e2059aa439.jpg" class="card-img-top" alt="Hantera Bilar">
             <div class="card-body">
+                <!-- Added flexbox for better alignment -->
                 <h5 class="card-title">Bilar</h5>
                 <p class="card-text">Lägg till, redigera och ta bort bilar i systemet.</p>
-                <a asp-action="Index" asp-controller="AdminCar" class="btn btn-primary w-100">Gå till Hantering</a>
+                <a asp-action="Index" asp-controller="AdminCar" class="btn btn-primary mt-auto w-100">Gå till Hantering</a>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 mb-4 d-flex">
-        <div class="card">
+    <div class="col-sm-6 col-md-4 col-lg-3 mb-4 d-flex ">
+        <div class="card h-100 flex-grow-1">
+            <!-- Added h-100 to make cards equal height -->
             <img src="https://www.clipartmax.com/png/middle/349-3496311_download-users-icon-clipart-computer-icons-user-communication-users-group-icon.png" class="card-img-top" alt="Hantera Kunder">
-            <div class="card-body">
+            <div class="card-body ">
+                <!-- Added flexbox for better alignment -->
                 <h5 class="card-title">Kunder</h5>
                 <p class="card-text">Hantera kundinformation och profilinställningar.</p>
-                <a asp-action="Index" asp-controller="AdminAccount" class="btn btn-primary w-100">Gå till Hantering</a>
+                <a asp-action="Index" asp-controller="AdminAccount" class="btn btn-primary mt-auto w-100">Gå till Hantering</a>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 mb-4 d-flex">
-        <div class="card">
+    <div class="col-sm-6 col-md-4 col-lg-3 mb-4 d-flex ">
+        <div class="card h-100 flex-grow-1">
+            <!-- Added h-100 to make cards equal height -->
             <img src="https://via.placeholder.com/150" class="card-img-top" alt="Hantera Bokningar">
-            <div class="card-body">
+            <div class="card-body ">
+                <!-- Added flexbox for better alignment -->
                 <h5 class="card-title">Bokningar</h5>
                 <p class="card-text">Visa och hantera kundernas bokningar och scheman.</p>
-                <a asp-action="Index" asp-controller="AdminRental" class="btn btn-primary w-100">Gå till Hantering</a>
+                <a asp-action="Index" asp-controller="AdminRental" class="btn btn-primary mt-auto w-100">Gå till Hantering</a>
             </div>
         </div>
     </div>
-</div> *@
+</div>
 
 
 

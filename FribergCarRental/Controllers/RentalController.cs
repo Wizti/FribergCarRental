@@ -16,35 +16,51 @@ namespace FribergCarRental.Controllers
             this._rentalService = rentalService;
         }
 
-        public async Task<IActionResult> SelectDates(int carId)
+        public IActionResult SelectDates()
+        {
+            var selectDatesViewModel = new SelectDatesViewModel
+            {
+                StartDate = DateOnly.FromDateTime(DateTime.Today),
+                EndDate = DateOnly.FromDateTime(DateTime.Today),
+            };
+            return View(selectDatesViewModel);
+        }
+
+        public async Task<IActionResult> AvailableCars(SelectDatesViewModel selectDatesVM)
+        {
+            var cars = await _rentalService.GetAllAvailableCarsAsync(selectDatesVM.StartDate, selectDatesVM.EndDate);
+
+            List<RentalViewModel> rentalVMs = new List<RentalViewModel>();
+            foreach (var car in cars)
+            {
+                rentalVMs.Add(new RentalViewModel
+                {                    
+                    Car = car,
+                    StartDate = selectDatesVM.StartDate,
+                    EndDate = selectDatesVM.EndDate,
+                });
+            }
+
+            return View(rentalVMs);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ConfirmRental(int carId, DateOnly startDate, DateOnly endDate)
         {
             var car = await _rentalService.GetCarByIdAsync(carId);
             if (car == null)
             {
-                return NotFound();
+                return RedirectToAction("AvailableCars");
             }
 
-            var rentalViewModel = new RentalViewModel
+            var rentalVM = new RentalViewModel
             {
-                CarId = car.Id,
-                Description = car.Description,
-                Model = car.Model,
-                Price = car.Price,
-                StartDate = DateOnly.FromDateTime(DateTime.Today),
-                EndDate = DateOnly.FromDateTime(DateTime.Today),
+                Car = car,
+                StartDate = startDate,
+                EndDate = endDate,
             };
-            return View(rentalViewModel);
-        }
 
-        [HttpGet]
-        public async Task<IActionResult> ConfirmRental(RentalViewModel rentalVM)
-        {
-            if(rentalVM == null)
-            {
-                return RedirectToAction("SelectDates");
-            }
-
-            var totalPrice = await _rentalService.CalculateTotalPriceAsync(rentalVM.StartDate, rentalVM.EndDate, rentalVM.CarId);
+            var totalPrice = await _rentalService.CalculateTotalPriceAsync(startDate, endDate, carId);
             
             ViewBag.TotalPrice = totalPrice;
 
@@ -74,7 +90,8 @@ namespace FribergCarRental.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SelectDates(RentalViewModel rentalVM)
+        //public async Task<IActionResult> SelectDates(RentalViewModel rentalVM)
+        public IActionResult SelectDates(SelectDatesViewModel selectDatesVM)
         {
             var customerId = HttpContext.Session.GetInt32("UserId");
 
@@ -84,26 +101,25 @@ namespace FribergCarRental.Controllers
             }
 
             var currentDate = DateOnly.FromDateTime(DateTime.Today);
-            if (rentalVM.StartDate < currentDate)
+            if (selectDatesVM.StartDate < currentDate)
             {
                 ModelState.AddModelError("", "Kan inte boka tidigare än dagens datum.");
-                return View("SelectDates", rentalVM);
+                return View("SelectDates", selectDatesVM);
             }
 
-            if (rentalVM.StartDate >= rentalVM.EndDate)
+            if (selectDatesVM.StartDate >= selectDatesVM.EndDate)
             {
                 ModelState.AddModelError("", "Startdatum måste vara tidigare än slutdatum.");
-                return View("SelectDates", rentalVM);
+                return View("SelectDates", selectDatesVM);
             }
 
-            if (!await _rentalService.IsCarAvailableAsync(rentalVM.CarId, rentalVM.StartDate, rentalVM.EndDate))
+            /*if (!await _rentalService.IsCarAvailableAsync(rentalVM.CarId, rentalVM.StartDate, rentalVM.EndDate))
             {
                 ModelState.AddModelError("", "Bilen är tyvärr inte tillgänglig från och till det datumet du valde.");
                 return View("SelectDates", rentalVM);
-            }
+            }*/
 
-            return RedirectToAction("ConfirmRental", rentalVM);
-
+            return RedirectToAction("AvailableCars", selectDatesVM);
         }
 
         // POST: RentalController/Create
@@ -122,7 +138,7 @@ namespace FribergCarRental.Controllers
 
                 var rental = new Rental
                 {
-                    CarId = rentalVM.CarId,
+                    CarId = rentalVM.Car.Id,
                     CustomerId = customerId.Value,
                     RentalStart = rentalVM.StartDate,
                     RentalEnd = rentalVM.EndDate

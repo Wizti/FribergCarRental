@@ -46,8 +46,9 @@ namespace FribergCarRental.Controllers
 
         // GET: AccountController/Details/5
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login(string? returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
@@ -93,7 +94,7 @@ namespace FribergCarRental.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginVM)
+        public async Task<IActionResult> Login(LoginViewModel loginVM, string? returnUrl = null)
         {
             if (!ModelState.IsValid)
             {
@@ -114,11 +115,15 @@ namespace FribergCarRental.Controllers
             HttpContext.Session.SetString("UserName", user.UserName);
             HttpContext.Session.SetString("UserRole", user.Role.ToString());
 
-            var selectedCarId = HttpContext.Session.GetInt32("SelectedCarId");
+            /*var selectedCarId = HttpContext.Session.GetInt32("SelectedCarId");
             if (selectedCarId.HasValue)
             {
                 HttpContext.Session.Remove("SelectedCarId");
                 return RedirectToAction("SelectDates", "Rental", new { carId = selectedCarId.Value });
+            }*/
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
             }
 
             return RedirectToAction("Success", "Account");

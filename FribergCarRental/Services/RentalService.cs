@@ -37,6 +37,26 @@ namespace FribergCarRental.Services
             return !rentals.Any();
         }
 
+        public async Task<List<Car>> GetAllAvailableCarsAsync(DateOnly startDate, DateOnly endDate)
+        {
+            var cars = await _carRepository.GetAllAsync();
+            var availableCars = new List<Car>();
+
+            foreach (var car in cars)
+            {
+                var rentals = await _rentalRepository.GetOverlappingRentalsForCarAsync(car.Id, startDate, endDate);
+                if(!rentals.Any())
+                {
+                    if (car.IsActive == true)
+                    {
+                        availableCars.Add(car);
+                    }
+                }
+            }
+
+            return availableCars;
+        }
+
         public void UpdateRentalStatus(Rental rental)
         {
             var currentDate = DateOnly.FromDateTime(DateTime.Today);
