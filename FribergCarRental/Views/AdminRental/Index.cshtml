@@ -4,61 +4,45 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Bokningar</h1>
+<h1 class="mb-4">Bokningsregister</h1>
 
-<table class="table">
-    <thead>
+<table class="table table-bordered table-hover text-center table-striped">
+    <thead class="table-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Rental.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Rental.RentalStart)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Rental.RentalEnd)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Rental.Car)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Rental.Customer)
-            </th>
-            <th></th>
+            <th>Status</th>
+            <th>Startdatum</th>
+            <th>Slutdatum</th>
+            <th>Bil</th>
+            <th>Total summa</th>
+            <th>Kund</th>
+            <th>Åtgärder</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
+                <td>@Html.DisplayFor(modelItem => item.Rental.Status)</td>
+                <td>@item.Rental.RentalStart</td>
+                <td>@item.Rental.RentalEnd</td>
+                <td>@item.Rental.Car.Model</td>
+                <td>@item.TotalPrice &nbsp;SEK</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Rental.Status)
+                    @item.Rental.Customer.FirstName
+                    @item.Rental.Customer.LastName
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Rental.RentalStart)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rental.RentalEnd)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rental.Car.Model)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalPrice)&nbsp;SEK
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rental.Customer.FirstName)
-                    @Html.DisplayFor(modelItem => item.Rental.Customer.LastName)
-                </td>
-                <td>
-                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Rental.Id">Detaljer</a> |
+                    <div class="d-flex gap-2 justify-content-start">   
+                    <a asp-action="Details" asp-route-id="@item.Rental.Id" class="btn btn-sm btn-info">
+                        <i class="bi bi-eye"></i> Detaljer
+                    </a>
                     @if (item.Rental.Status == FribergCarRental.Data.Enums.RentalStatus.Upcoming)
                     {
-                        <a class="btn btn-primary" asp-action="Delete" asp-route-id="@item.Rental.Id">Ta Bort</a>
+                        <a asp-action="Delete" asp-route-id="@item.Rental.Id" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash"></i> Ta bort
+                        </a>
                     }
+                    </div>
                 </td>
             </tr>
         }

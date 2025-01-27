@@ -3,55 +3,43 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+<h1 class="mb-4">Bilregister</h1>
 <p>
-    <a asp-action="Create">Skapa bil</a>
+    <a asp-action="Create" class="btn btn-success">Skapa ny Bil</a>
 </p>
-<table class="table">
-    <thead>
+
+<table class="table table-bordered table-hover text-center table-striped">
+    <thead class="table-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Model)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Year)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th></th>
+            <th>Modell</th>
+            <th>Årsmodell</th>
+            <th>Beskrivning</th>
+            <th>Pris per dygn</th>
+            <th>Status</th>
+            <th>Åtgärder</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Ändra</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
-                <a asp-action="SoftDelete" asp-route-id="@item.Id">Inaktivera</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Model</td>
+                <td>@item.Year</td>
+                <td>@item.Description</td>
+                <td>@item.Price</td>
+                <td>@item.IsActive</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">
+                        <i class="bi bi-pencil"></i> Ändra
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                        <i class="bi bi-eye"></i> Detaljer
+                    </a>
+                    <a asp-action="SoftDelete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> Inaktivera
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
