@@ -1,50 +1,15 @@
-﻿@* @model FribergCarRental.ViewModels.SelectDatesViewModel
+﻿@model FribergCarRental.ViewModels.SelectDatesViewModel
 
 @{
     ViewData["Title"] = "SelectDates";
 }
 
-<h1>Boka bil</h1>
-
-<div class="row">
-    <div class="col-md-4">
-        <div>
-            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-        </div>
-        <form method="post" asp-controller="Rental" asp-action="SelectDates">
-            <div class="form-group">
-                <label asp-for="StartDate">Startdatum</label>
-                <input type="date" asp-for="StartDate" class="form-control" value="@Model.StartDate" required />
-
-            </div>
-            <div class="form-group">
-                <label asp-for="EndDate">Slutdatum</label>
-                <input type="date" asp-for="EndDate" class="form-control" value="@Model.EndDate" required />
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Boka" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-<div>
-
-    <a asp-action="Index" asp-controller="Car">Tillbaka till bilar</a>
-</div> *@
-
-@model FribergCarRental.ViewModels.SelectDatesViewModel
-
-@{
-    ViewData["Title"] = "SelectDates";
-}
-
-<div class="container my-5">
+@* <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-lg border-0 rounded-3">
                 <div class="card-body p-4">
-                    <h3 class="card-title text-center mb-4">Boka bil</h3>
+                    <h3 class="card-title text-center mb-4">Ange det datum du önskar hyra bilen för att se tillgängliga fordon.</h3>
                     <div>
                         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                     </div>
@@ -66,6 +31,40 @@
             </div>
         </div>
     </div>
+</div> *@
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-body p-4">
+                    <h5 class="card-title text-center mb-4">
+                        Välj datum för att se vilka bilar som finns tillgängliga.
+                    </h5>
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                    <form method="post" asp-controller="Rental" asp-action="SelectDates">
+                        <div class="row g-3 mb-4">
+                            <div class="col-6">
+                                <label asp-for="StartDate" class="form-label">Startdatum</label>
+                                <input type="date" asp-for="StartDate" class="form-control" value="@Model.StartDate" required />
+                            </div>
+                            <div class="col-6">
+                                <label asp-for="EndDate" class="form-label">Slutdatum</label>
+                                <input type="date" asp-for="EndDate" class="form-control" value="@Model.EndDate" required />
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" asp-controller="Car" class="btn btn-secondary">Tillbaka till bilar</a>
+                            <input type="submit" value="Visa tillgängliga bilar" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 

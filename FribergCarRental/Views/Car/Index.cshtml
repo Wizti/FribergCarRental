@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FribergCarRental.Models.Car>
+﻿@* @model IEnumerable<FribergCarRental.Models.Car>
 
 @{
     ViewData["Title"] = "Index";
@@ -35,5 +35,45 @@
             }
         }
 
+    </div>
+</div>
+ *@
+
+ @model IEnumerable<FribergCarRental.Models.Car>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <div class="text-left">
+        <h3>Våra bilar</h3>
+        <hr />
+    </div>
+    <div class="row justify-content-center">
+        @foreach (var item in Model)
+        {
+            if (item.IsActive == true)
+            {
+                var firstImage = item.Images.FirstOrDefault();
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch">
+                    <div class="card" style="width: 100%; border-radius: 15px;">
+                        <img src="@firstImage?.ImageUrl" class="card-img-top" alt="@item.Model" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@item.Model - @item.Year</h5>
+                            <p class="card-text text-truncate">@item.Description</p>
+                            <p><strong>@item.Price</strong> kr/dygn</p>
+                            <div class="mt-auto d-flex justify-content-between">
+                                <form asp-controller="Car" asp-action="RentCar" method="get">
+                                    <input type="hidden" name="carId" value="@item.Id" />
+                                    <button type="submit" class="btn btn-primary btn-sm">Till Uthyrning</button>
+                                </form>
+                                <a class="btn btn-outline-primary btn-sm" asp-action="Details" asp-route-id="@item.Id">Detaljer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
     </div>
 </div>
