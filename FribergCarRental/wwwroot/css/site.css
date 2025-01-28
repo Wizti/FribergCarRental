@@ -6,7 +6,10 @@ html {
     position: relative;
     min-height: 100%;
     font-size: 14px;
-    
+}
+header {
+    color: white;
+    padding: 20px 0;
 }
 
 @media (min-width: 768px) {
@@ -22,7 +25,8 @@ html {
 body {
     margin-bottom: 60px;
     background-color: var(--bg-grey-color);
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Roboto', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .card-img-top {
@@ -35,12 +39,17 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    border: 2px solid #444;
     height: 100%;
     box-shadow: 4px 4px 10px 3px rgba(0, 0, 0, 0.459);
 }
 
+#carhover:hover {
+        transform: scale(1.03);
+}
+
 .row {
-    gap: 1rem; /* Skapa avstånd mellan korten */
+    gap: 1rem;
 }
 
 .form-control {
@@ -53,10 +62,23 @@ body {
     align-items: center;
     background-color: white;
     padding: 2rem;
-    border-radius: 0.5rem; /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
     margin-top: 100px;
 }
+
+.btn:hover {
+        transform: scale(1.05);
+
+}
+
+.btn:active {
+        transform: scale(0.98); 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
 

@@ -35,10 +35,12 @@ namespace FribergCarRental.Controllers
         }
 
         // GET: CarController/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id, DateOnly startDate, DateOnly endDate)
         {
             var car = await _carRepository.GetFullByIdAsync(id);
-            
+            ViewData["StartDate"] = startDate;
+            ViewData["EndDate"] = endDate;
+
             return View(car);
         }
 

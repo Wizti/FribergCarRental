@@ -6,12 +6,16 @@ namespace FribergCarRental.Models
     {
         [Display(Name = "BilID")]
         public int Id { get; set; }
+        [Required]
         [Display(Name = "Märke")]
         public string Model { get; set; }
+        [Required]
         [Display(Name = "Årsmodell")]
         public int Year { get; set; }
+        [Required]
         [Display(Name = "Pris per dygn")]
         public int Price { get; set; }
+        [Required]
         [Display(Name = "Beskrivning")]
         public string Description { get; set; }
         [Display(Name = "Aktiv")]

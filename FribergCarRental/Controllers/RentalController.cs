@@ -40,6 +40,8 @@ namespace FribergCarRental.Controllers
                     EndDate = selectDatesVM.EndDate,
                 });
             }
+            ViewData["StartDate"] = selectDatesVM.StartDate;
+            ViewData["EndDate"] = selectDatesVM.EndDate;
 
             return View(rentalVMs);
         }
@@ -112,12 +114,6 @@ namespace FribergCarRental.Controllers
                 ModelState.AddModelError("", "Startdatum måste vara tidigare än slutdatum.");
                 return View("SelectDates", selectDatesVM);
             }
-
-            /*if (!await _rentalService.IsCarAvailableAsync(rentalVM.CarId, rentalVM.StartDate, rentalVM.EndDate))
-            {
-                ModelState.AddModelError("", "Bilen är tyvärr inte tillgänglig från och till det datumet du valde.");
-                return View("SelectDates", rentalVM);
-            }*/
 
             return RedirectToAction("AvailableCars", selectDatesVM);
         }

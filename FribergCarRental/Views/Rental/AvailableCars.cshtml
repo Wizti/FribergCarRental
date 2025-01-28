@@ -4,8 +4,8 @@
     ViewData["Title"] = "AvailableCars";
 }
 
-<h2>Tillgängliga bilar under perioden</h2>
-
+<h2>Tillgängliga bilar @ViewData["StartDate"] - @ViewData["EndDate"]</h2>
+<a class="btn btn-outline-primary btn-sm" asp-action="SelectDates" asp-controller="Rental">Tillbaka</a>
 <div class="container">    
     <div class="row justify-content-center">
         @foreach (var item in Model)
@@ -20,11 +20,14 @@
                         <p class="card-text text-truncate">@item.Car.Description</p>
                         <p><strong>@item.Car.Price</strong> kr/dygn</p>
                         <div class="mt-auto d-flex justify-content-between">
-                            <form asp-controller="Car" asp-action="RentCar" method="get">
+                            <form asp-controller="Rental" asp-action="ConfirmRental" method="get">
                                 <input type="hidden" name="carId" value="@item.Car.Id" />
+                                <input type="hidden" name="startDate" value="@item.StartDate" />
+                                <input type="hidden" name="endDate" value="@item.EndDate" />
                                 <button type="submit" class="btn btn-primary btn-sm">Boka</button>
                             </form>
-                            <a class="btn btn-outline-primary btn-sm" asp-action="Details" asp-route-id="@item.Car.Id">Detaljer</a>
+                            <a class="btn btn-outline-primary btn-sm" asp-action="Details" asp-controller="Car" asp-route-id="@item.Car.Id"
+                               asp-route-startDate="@item.StartDate.ToString("yyyy-MM-dd")" asp-route-endDate="@item.EndDate.ToString("yyyy-MM-dd")">Detaljer</a>
                         </div>
                     </div>
                 </div>
