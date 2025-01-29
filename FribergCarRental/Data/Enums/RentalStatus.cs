@@ -4,14 +4,8 @@ namespace FribergCarRental.Data.Enums
 {
     public enum RentalStatus
     {
-        [Display(Name = "Kommande")]
-
-        Upcoming = 1,
-        [Display(Name = "Aktiv")]
-
+        Upcoming = 1, 
         Active,
-        [Display(Name = "Utförd")]
-
         Completed
     }
 }

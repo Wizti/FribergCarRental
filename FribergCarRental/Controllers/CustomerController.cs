@@ -1,6 +1,7 @@
 ﻿using FribergCarRental.Data;
 using FribergCarRental.Data.interfaces;
 using FribergCarRental.Models;
+using FribergCarRental.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace FribergCarRental.Controllers
         public async Task<IActionResult> Index()
         {
             var customerId = HttpContext.Session.GetInt32("UserId");
+
             var rentals = await _rentalRepository.GetAllCustomerRentalsAsync(customerId);
 
             foreach (var rental in rentals)
@@ -27,7 +29,13 @@ namespace FribergCarRental.Controllers
                 _rentalService.UpdateRentalStatus(rental);
             }
 
-            return View(rentals);
+            var rentalRecords = await Task.WhenAll(rentals.Select(async r => new RentalRecordViewModel
+            {
+                Rental = r,
+                TotalPrice = await _rentalService.CalculateTotalPriceAsync(r.RentalStart, r.RentalEnd, r.CarId)
+            }));            
+
+            return View(rentalRecords);
         }
 
         // GET: CustomerController/Delete/5
@@ -42,9 +50,20 @@ namespace FribergCarRental.Controllers
         }
 
         // GET: CustomerController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            var rental = await _rentalRepository.GetFullRentalByIdAsync(id);
+            if (rental == null)
+            {
+                return NotFound();
+            }
+
+            var rentalVM = new RentalRecordViewModel
+            {
+                Rental = rental,
+                TotalPrice = await _rentalService.CalculateTotalPriceAsync(rental.RentalStart, rental.RentalEnd, rental.CarId)
+            };
+            return View(rentalVM);
         }
 
         // GET: CustomerController/Create

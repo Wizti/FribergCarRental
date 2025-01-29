@@ -42,7 +42,14 @@
                     <hr />
                     <p><strong>Beskrivning:</strong> @Model.Description</p>
                     <p><strong>Pris:</strong> @Model.Price kr/dygn</p>
-                    @if (ViewData["StartDate"] != null && ViewData["EndDate"] != null)
+                    @if (Context.Session.GetString("UserRole") == null)
+                    {
+                        <a asp-controller="Car" asp-action="RentCar" method="get">
+                            <input type="hidden" name="carId" value="@Model.Id" />
+                            <button type="submit" class="btn btn-primary btn-sm">Till Uthyrning</button>
+                        </a>
+                    }
+                    else if (ViewData["StartDate"] != null && ViewData["EndDate"] != null)
                     {
                         <form asp-controller="Rental" asp-action="ConfirmRental" method="get">
                             <input type="hidden" name="carId" value="@Model.Id" />

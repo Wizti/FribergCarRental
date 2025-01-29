@@ -23,6 +23,11 @@ namespace FribergCarRental.Controllers
         {
             var rentals = await _rentalService.GetAllRentalAsync();
 
+            foreach (var rental in rentals)
+            {
+                _rentalService.UpdateRentalStatus(rental);
+            }
+
             var rentalRecords = await Task.WhenAll(rentals.Select(async r => new RentalRecordViewModel
             {
                 Rental = r,

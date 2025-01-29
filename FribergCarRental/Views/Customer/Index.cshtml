@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FribergCarRental.Models.Rental>
+﻿@model IEnumerable<FribergCarRental.ViewModels.RentalRecordViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -21,19 +21,19 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                <td>@item.RentalStart</td>
-                <td>@item.RentalEnd</td>
-                <td>@item.Car.Model</td>
-                <td> 1567,00 &nbsp;SEK</td>
+                <td>@Html.DisplayFor(modelItem => item.Rental.Status)</td>
+                <td>@item.Rental.RentalStart</td>
+                <td>@item.Rental.RentalEnd</td>
+                <td>@item.Rental.Car.Model</td>
+                <td>@item.TotalPrice &nbsp;SEK</td>
                 <td>
                     <div class="d-flex gap-2 justify-content-left">
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                        <a asp-action="Details" asp-route-id="@item.Rental.Id" class="btn btn-sm btn-info">
                             <i class="bi bi-eye"></i> Detaljer
                         </a>
-                        @if (item.Status == FribergCarRental.Data.Enums.RentalStatus.Upcoming)
+                        @if (item.Rental.Status == FribergCarRental.Data.Enums.RentalStatus.Upcoming)
                         {
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                            <a asp-action="Delete" asp-route-id="@item.Rental.Id" class="btn btn-sm btn-danger">
                                 <i class="bi bi-trash"></i> Ta bort
                             </a>
                         }
