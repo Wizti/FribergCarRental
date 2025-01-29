@@ -1,0 +1,30 @@
+﻿@model Dictionary<string, object>
+
+<div class="card shadow-lg p-4">
+    <h4 class="card-title mb-3 text-center">@ViewData["Title"]</h4>
+
+    @foreach (var detail in Model)
+    {
+        <div class="mb-3">
+            <strong>@detail.Key:</strong> @detail.Value
+        </div>
+    }
+
+    <div class="d-flex justify-content-between mt-4">
+        @if (ViewData["DeleteAction"] != null)
+        {
+            @* <form asp-action="Delete">
+                <input type="hidden" asp-for="UserId" />
+                <input asp-action="@ViewData["DeleteAction"]" asp-route-id="@ViewData["ItemId"]" type="submit" value="Ta bort" class="btn btn-danger" />           
+            </form> *@
+            <form asp-action="@ViewData["DeleteAction"]" method="post">
+                <input type="hidden" name="UserId" value="@ViewData["ItemId"]" />
+                <input type="submit" value="Ta bort" class="btn btn-danger" />
+            </form>
+        }
+
+        <a asp-action="@ViewData["BackAction"]" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Tillbaka
+        </a>
+    </div>
+</div>

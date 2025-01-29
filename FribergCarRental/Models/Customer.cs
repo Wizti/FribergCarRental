@@ -5,8 +5,6 @@ namespace FribergCarRental.Models
 {
     public class Customer : User
     {
-        [Display(Name = "AnvändarID")]
-        public int Id { get; set; }
         [Required]
         [Display(Name = "Förnamn")]
         public string FirstName { get; set; }

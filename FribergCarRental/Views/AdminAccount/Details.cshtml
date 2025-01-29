@@ -1,85 +1,32 @@
-﻿@* @model FribergCarRental.Models.Customer
+﻿@model FribergCarRental.Models.Customer
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Kundinformation";
+    ViewData["EditAction"] = "Edit";
+    ViewData["BackAction"] = "Index";
+    ViewData["ItemId"] = Model.Id;
+
+    var details = new Dictionary<string, object>
+    {
+        { "Förnamn", Model.FirstName },
+        { "Efternamn", Model.LastName },
+        { "Telefonnummer", Model.Phone },
+        { "Gatuadress", Model.Address.Street },
+        { "Postnummer", Model.Address.Postalcode },
+        { "Stad", Model.Address.City },
+        { "E-post", Model.Email },
+        { "Användarnamn", Model.UserName },
+        { "Lösenord", Model.Password },
+        { "Roll", Model.Role },
+        { "Kundnr", Model.Id },
+    };
 }
 
-<h1>Detaljer</h1>
-
-<div>
-    <h4>Kunder</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.Street)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Address.Street)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.Postalcode)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address.Postalcode)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.City)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address.City)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Role)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Role)
-        </dd>
-    </dl>
+<div class="container col-md-6">
+    @Html.Partial("_DetailsCard", details)
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Ändra</a> |
-    <a asp-action="Index">Tillbaka</a>
-</div>
- *@
-@model FribergCarRental.Models.Customer
 
-@{
+@* @{
     ViewData["Title"] = "Detaljer";
 }
 
@@ -127,7 +74,7 @@
             <strong>Roll:</strong> @Html.DisplayFor(model => model.Role)
         </div>
         <div class="mb-3">
-            <strong>ID:</strong> @Html.DisplayFor(model => model.Id)
+            <strong>Kundnummer:</strong> @Html.DisplayFor(model => model.Id)
         </div>
 
         <div class="d-flex justify-content-between mt-4">
@@ -139,5 +86,5 @@
             </a>
         </div>
     </div>
-</div>
+</div> *@
 

@@ -11,7 +11,7 @@ namespace FribergCarRental.Controllers
 
             if (string.IsNullOrEmpty(role) || role != "Customer")
             {
-                context.Result = new RedirectToActionResult("AccessDenied", "Account", null);
+                context.Result = new RedirectToActionResult("Login", "Account", null);
             }
 
             base.OnActionExecuting(context);

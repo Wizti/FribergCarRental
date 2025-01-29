@@ -1,10 +1,26 @@
-﻿@model FribergCarRental.Models.Customer
+﻿@model FribergCarRental.ViewModels.DeleteCustomerViewModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Ta bort användare";
+    ViewData["BackAction"] = "Index";
+    ViewData["DeleteAction"] = "Delete";
+    ViewData["ItemId"] = Model.UserId;
+
+    var details = new Dictionary<string, object>
+    {
+        { "Förnamn", Model.FirstName },
+        { "Efternamn", Model.LastName },
+        { "Telefonnummer", Model.Phone },
+        { "E-post", Model.Email },
+        { "Kundnr", Model.UserId },
+    };
 }
 
-<h1>Ta bort användare</h1>
+<div class="container col-md-6">
+    @Html.Partial("_DeleteCard", details)
+</div>
+
+<@* h1>Ta bort användare</h1>
 
 <h3>Är du säker att du vill radera?</h3>
 <div>
@@ -48,4 +64,4 @@
         <input type="submit" value="Ta bort" class="btn btn-danger" /> |
         <a asp-action="Index">Tillbaka</a>
     </form>
-</div>
+</div> *@

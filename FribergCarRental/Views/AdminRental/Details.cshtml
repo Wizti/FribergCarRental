@@ -1,71 +1,25 @@
 ﻿@model FribergCarRental.ViewModels.RentalRecordViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Bokningsdetaljer";    
+    ViewData["BackAction"] = "Index";
+    ViewData["ItemId"] = Model.Rental.Id;
+
+    var details = new Dictionary<string, object>
+    {
+        { "Bokningsnr", Model.Rental.Id },
+        { "Status", Model.Rental.Status },
+        { "Startdatum", Model.Rental.RentalStart },
+        { "Slutdatum", Model.Rental.RentalEnd },
+        { "Märke", Model.Rental.Car.Model },
+        { "Total summa", $"{Model.TotalPrice} SEK" },
+        { "Förnamn", Model.Rental.Customer.FirstName },
+        { "Efternamn", Model.Rental.Customer.LastName },
+        { "E-post", Model.Rental.Customer.Email },
+        { "Kundnummer", Model.Rental.CustomerId },
+    };
 }
 
-<h1>Detaljer</h1>
-
-<div>
-    <h4>@Html.DisplayNameFor(model => model.Rental.CustomerId): @Html.DisplayFor(model => model.Rental.CustomerId)</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rental.Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rental.Status)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rental.RentalStart)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rental.RentalStart)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rental.RentalEnd)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rental.RentalEnd)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rental.Car.Model)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rental.Car.Model)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TotalPrice)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TotalPrice)
-        </dd>        
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Rental.Customer.FirstName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Rental.Customer.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Rental.Customer.LastName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Rental.Customer.LastName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rental.Customer.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rental.Customer.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Rental.CustomerId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Rental.CustomerId)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Index">Tillbaka</a>
+<div class="container col-md-6">
+    @Html.Partial("_DetailsCard", details)
 </div>

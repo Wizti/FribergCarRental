@@ -8,6 +8,7 @@ namespace FribergCarRental.Data
         Task<User> GetByIdAsync(int id);
         Task<Customer> GetCustomerByIdAsync(int userId);
         Task<Admin> GetAdminByIdAsync(int userId);
+        Task<Customer> GetAllRentalsByCustomerAsync(int userId);
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(User user);
         Task<IEnumerable<User>> GetAllAsync();

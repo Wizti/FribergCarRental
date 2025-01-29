@@ -11,7 +11,7 @@ namespace FribergCarRental.Models
         public string Model { get; set; }
         [Required]
         [Display(Name = "Årsmodell")]
-        public int Year { get; set; }
+        public int Year { get; set; }   
         [Required]
         [Display(Name = "Pris per dygn")]
         public int Price { get; set; }

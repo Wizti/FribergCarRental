@@ -21,6 +21,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Car.Price)
             </th>
+            <th>
+                Total summa
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -37,6 +40,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => Model.Car.Price)
+            </td>
+            <td>
+            @ViewBag.TotalPrice
             </td>
         </tr>
 

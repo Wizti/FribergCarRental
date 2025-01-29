@@ -96,6 +96,7 @@ namespace FribergCarRental.Controllers
         public IActionResult SelectDates(SelectDatesViewModel selectDatesVM)
         {
             var customerId = HttpContext.Session.GetInt32("UserId");
+            var role = HttpContext.Session.GetString("UserRole");
 
             if (customerId == null)
             {
@@ -141,6 +142,8 @@ namespace FribergCarRental.Controllers
                 };
 
                 await _rentalService.CreateRentalAsync(rental);
+
+                ViewBag.TotalPrice = await _rentalService.CalculateTotalPriceAsync(rental.RentalStart, rental.RentalEnd, rental.CarId);
 
                 return View("RentalSuccess", rentalVM);
             }

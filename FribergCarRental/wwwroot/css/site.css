@@ -26,7 +26,6 @@ body {
     margin-bottom: 60px;
     background-color: var(--bg-grey-color);
     font-family: 'Roboto', sans-serif;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .card-img-top {
@@ -38,8 +37,7 @@ body {
 .card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    border: 2px solid #444;
+    justify-content: space-between;    
     height: 100%;
     box-shadow: 4px 4px 10px 3px rgba(0, 0, 0, 0.459);
 }

@@ -15,11 +15,11 @@ namespace FribergCarRental.Models
         [Display(Name = "Slutdatum")]
         public DateOnly RentalEnd { get; set; }
         [Display(Name = "Kundnummer")]
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }        
+        public Customer? Customer { get; set; }
         public int CarId { get; set; }
-        [Display(Name = "Bil")]
         public Car Car { get; set; }
-        [Display(Name = "Kund")]
-        public Customer Customer { get; set; }
+        
+        
     }
 }

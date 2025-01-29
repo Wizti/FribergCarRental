@@ -101,7 +101,7 @@ namespace FribergCarRental.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     RentalStart = table.Column<DateOnly>(type: "date", nullable: false),
                     RentalEnd = table.Column<DateOnly>(type: "date", nullable: false),
-                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: true),
                     CarId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -112,14 +112,19 @@ namespace FribergCarRental.Migrations
                         column: x => x.CarId,
                         principalTable: "Cars",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Rentals_Users_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "Admin_FirstName", "Admin_LastName", "Password", "Role", "UserName", "UserType" },
+                values: new object[] { 1, "admin@example.com", "Admin", "User", "admin", 1, "admin", "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Images_CarId",

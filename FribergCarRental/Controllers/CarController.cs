@@ -25,7 +25,7 @@ namespace FribergCarRental.Controllers
 
         public IActionResult RentCar(int carId)
         {
-            if (HttpContext.Session.GetString("UserId") == null)
+            if (HttpContext.Session.GetString("UserId") == null || HttpContext.Session.GetString("UserRole") == "Admin")
             {
                 var returnUrl = Url.Action("SelectDates", "Rental");
                 return RedirectToAction("Login", "Account", new { returnUrl });

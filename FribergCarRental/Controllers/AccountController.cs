@@ -76,16 +76,8 @@ namespace FribergCarRental.Controllers
                 HttpContext.Session.SetString("UserName", user.UserName);
                 HttpContext.Session.SetString("UserRole", user.Role.Value.ToString());
 
-                var selectedCarId = HttpContext.Session.GetInt32("SelectedCarId");
-                if (selectedCarId.HasValue)
-                {
-                    HttpContext.Session.Remove("SelectedCarId");
-                    return RedirectToAction("SelectDates", "Rental", new { carId = selectedCarId.Value });
-                }
-                else
-                {                    
-                    return RedirectToAction("Success", "Account");
-                }
+                return RedirectToAction("Index", "Car");
+
             }
             catch
             {
@@ -110,23 +102,17 @@ namespace FribergCarRental.Controllers
                 ModelState.AddModelError("", "Ogiltiga inloggningsuppgifter.");
                 return View(loginVM);
             }
-
+            HttpContext.Session.Clear();
             HttpContext.Session.SetInt32("UserId", user.Id);
             HttpContext.Session.SetString("UserName", user.UserName);
             HttpContext.Session.SetString("UserRole", user.Role.ToString());
 
-            /*var selectedCarId = HttpContext.Session.GetInt32("SelectedCarId");
-            if (selectedCarId.HasValue)
-            {
-                HttpContext.Session.Remove("SelectedCarId");
-                return RedirectToAction("SelectDates", "Rental", new { carId = selectedCarId.Value });
-            }*/
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
 
-            return RedirectToAction("Success", "Account");
+            return RedirectToAction("Index", "Car");
         }
 
         [HttpPost]

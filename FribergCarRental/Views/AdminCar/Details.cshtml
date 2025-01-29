@@ -1,6 +1,26 @@
 ﻿@model FribergCarRental.Models.Car
 
 @{
+    ViewData["Title"] = "Detaljer";
+    ViewData["EditAction"] = "Edit";
+    ViewData["BackAction"] = "Index";
+    ViewData["ItemId"] = Model.Id;
+
+    var details = new Dictionary<string, object>
+    {
+        { "Märke", Model.Model },
+        { "Årsmodell", Model.Year },
+        { "Pris/dygn", Model.Price },
+        { "Beskrivning", Model.Description },
+        { "Status", Model.IsActive },
+    };
+}
+
+<div class="container col-md-6">
+    @Html.Partial("_DetailsCard", details)
+</div>
+
+@* @{
     ViewData["Title"] = "Details";
 }
 
@@ -45,4 +65,4 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Ändra</a> |
     <a asp-action="Index">Tillbaka</a>
-</div>
+</div> *@

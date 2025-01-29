@@ -108,7 +108,7 @@ namespace FribergCarRental.Migrations
                     b.Property<int>("CarId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateOnly>("RentalEnd")
@@ -188,6 +188,18 @@ namespace FribergCarRental.Migrations
                         });
 
                     b.HasDiscriminator().HasValue("Admin");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "admin@example.com",
+                            Password = "admin",
+                            Role = 1,
+                            UserName = "admin",
+                            FirstName = "Admin",
+                            LastName = "User"
+                        });
                 });
 
             modelBuilder.Entity("FribergCarRental.Models.Customer", b =>
@@ -228,14 +240,13 @@ namespace FribergCarRental.Migrations
                     b.HasOne("FribergCarRental.Models.Car", "Car")
                         .WithMany("Rentals")
                         .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("FribergCarRental.Models.Customer", "Customer")
                         .WithMany("Rentals")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Car");
 

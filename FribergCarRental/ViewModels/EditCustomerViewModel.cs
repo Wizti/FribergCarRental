@@ -21,6 +21,6 @@ namespace FribergCarRental.ViewModels
         [Display(Name = "Användarnamn")]
         public string UserName { get; set; }
         [Display(Name = "Lösenord")]
-        public string Password { get; set; }
+        public string? Password { get; set; }
     }
 }

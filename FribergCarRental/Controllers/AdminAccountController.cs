@@ -29,7 +29,7 @@ namespace FribergCarRental.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var customer = await _userRepository.GetCustomerByIdAsync(id);
-            return View(customer);       
+            return View(customer);
         }
 
         // GET: AdminCustomerController/Create
@@ -47,7 +47,7 @@ namespace FribergCarRental.Controllers
             {
                 return NotFound();
             }
-            if(customer.Address == null)
+            if (customer.Address == null)
             {
                 return NotFound("Hittade inte address");
             }
@@ -71,7 +71,17 @@ namespace FribergCarRental.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var customer = await _userRepository.GetCustomerByIdAsync(id);
-            return View(customer);
+
+            var deleteCustomerVM = new DeleteCustomerViewModel()
+            {
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                Phone = customer.Phone,
+                Email = customer.Email,
+                UserId = customer.Id,
+
+            };
+            return View(deleteCustomerVM);
         }
 
         // POST: AdminCustomerController/Create
@@ -101,7 +111,7 @@ namespace FribergCarRental.Controllers
             {
                 return View();
             }
-        }        
+        }
 
         // POST: AdminCustomerController/Edit/5
         [HttpPost]
@@ -125,7 +135,11 @@ namespace FribergCarRental.Controllers
                     customer.Address.Postalcode = customerVM.Postalcode;
                     customer.Address.City = customerVM.City;
                     customer.UserName = customerVM.UserName;
-                    customer.Password = customerVM.Password;
+                    if (customerVM.Password != null)
+                    {
+                        customer.Password = customerVM.Password;
+                    }
+                    //customer.Password = customer.Password;
 
                     await _userRepository.UpdateUserAsync(customer);
                 }
@@ -135,20 +149,26 @@ namespace FribergCarRental.Controllers
             {
                 return View(customerVM);
             }
-        }        
+        }
 
         // POST: AdminCustomerController/SoftDelete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(Customer customer)
+        public async Task<IActionResult> Delete(DeleteCustomerViewModel customerVM)
         {
             try
             {
-                var userToDelete = await _userRepository.GetByIdAsync(customer.Id);
+                var userToDelete = await _userRepository.GetAllRentalsByCustomerAsync(customerVM.UserId);
                 if (userToDelete == null)
                 {
                     return NotFound();
                 }
+
+                foreach(var rental in userToDelete.Rentals)
+                {
+                    rental.CustomerId = null;
+                }
+
                 await _userRepository.DeleteUserAsync(userToDelete);
 
                 return RedirectToAction(nameof(Index));

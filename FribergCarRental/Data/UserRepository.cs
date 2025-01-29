@@ -27,6 +27,11 @@ namespace FribergCarRental.Data
             return await _context.Users.OfType<Customer>().Include(a => a.Address).FirstOrDefaultAsync(c => c.Id == userId);
         }
 
+        public async Task<Customer> GetAllRentalsByCustomerAsync(int userId)
+        {
+            return await _context.Users.OfType<Customer>().Include(r => r.Rentals).FirstOrDefaultAsync(i => i.Id == userId);
+        }
+
         public async Task<Admin> GetAdminByIdAsync(int userId)
         {
             return await _context.Users.OfType<Admin>().FirstOrDefaultAsync(a => a.Id == userId);

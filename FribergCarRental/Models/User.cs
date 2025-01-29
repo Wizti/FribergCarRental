@@ -6,6 +6,7 @@ namespace FribergCarRental.Models
 {
     public abstract class User
     {
+        [Display(Name = "AnvändarID")]
         public int Id { get; set; }
         [Required(ErrorMessage = "Email krävs")]
         [DataType(DataType.EmailAddress)]
