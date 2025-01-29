@@ -104,13 +104,13 @@ namespace FribergCarRental.Controllers
             }
         }
 
-        // GET: AdminController/SoftDelete/5
+        // GET: AdminController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: AdminController/SoftDelete/5
+        // POST: AdminController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

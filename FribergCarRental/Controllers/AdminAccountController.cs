@@ -67,7 +67,7 @@ namespace FribergCarRental.Controllers
             return View(editCustomerViewModel);
         }
 
-        // GET: AdminCustomerController/SoftDelete/5
+        // GET: AdminCustomerController/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
             var customer = await _userRepository.GetCustomerByIdAsync(id);
@@ -151,7 +151,7 @@ namespace FribergCarRental.Controllers
             }
         }
 
-        // POST: AdminCustomerController/SoftDelete/5
+        // POST: AdminCustomerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(DeleteCustomerViewModel customerVM)

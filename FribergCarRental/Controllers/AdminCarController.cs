@@ -48,8 +48,8 @@ namespace FribergCarRental.Controllers
             return View();
         }
 
-        // GET: AdminCarController/SoftDelete/5
-        public async Task<IActionResult> SoftDelete(int id)
+        // GET: AdminCarController/Delete/5
+        public async Task<IActionResult> Delete(int id)
         {
             var car = await _carRepository.GetByIdAsync(id);
             if(car == null)
@@ -151,10 +151,10 @@ namespace FribergCarRental.Controllers
             
         }
 
-        // POST: AdminCarController/SoftDelete/5
+        // POST: AdminCarController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SoftDelete(Car car)
+        public async Task<IActionResult> Delete(Car car)
         {
             try
             {                

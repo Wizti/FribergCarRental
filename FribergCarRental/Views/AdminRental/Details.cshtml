@@ -13,11 +13,15 @@
         { "Slutdatum", Model.Rental.RentalEnd },
         { "Märke", Model.Rental.Car.Model },
         { "Total summa", $"{Model.TotalPrice} SEK" },
-        { "Förnamn", Model.Rental.Customer.FirstName },
-        { "Efternamn", Model.Rental.Customer.LastName },
-        { "E-post", Model.Rental.Customer.Email },
-        { "Kundnummer", Model.Rental.CustomerId },
     };
+
+    if(Model.Rental.Customer != null)
+    {
+        details.Add("Förnamn", Model.Rental.Customer.FirstName);
+        details.Add("Efternamn", Model.Rental.Customer.LastName);
+        details.Add("E-post", Model.Rental.Customer.Email);
+        details.Add("Kundnummer", Model.Rental.CustomerId);
+    }
 }
 
 <div class="container col-md-6">

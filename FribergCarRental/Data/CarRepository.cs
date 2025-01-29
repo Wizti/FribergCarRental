@@ -72,7 +72,7 @@ namespace FribergCarRental.Data
 
         public async Task DisableAsync(Car car)
         {
-            car.IsActive = false;
+            car.IsActive = !car.IsActive;
             await UpdateAsync(car);
             await _context.SaveChangesAsync();
         }

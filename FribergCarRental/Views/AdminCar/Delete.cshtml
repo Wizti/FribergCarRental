@@ -1,6 +1,38 @@
 ﻿@model FribergCarRental.Models.Car
 
 @{
+    ViewData["Title"] = "Ändra status";
+    ViewData["BackAction"] = "Index";
+    ViewData["DeleteAction"] = "Delete";
+    @if (Model.IsActive == false)
+    {
+        ViewData["Aktivera"] = "Aktivera";
+    }
+    else
+    {
+        ViewData["Inaktivera"] = "Inaktivera";
+    }
+    ViewData["ItemId"] = Model.Id;
+
+    var details = new Dictionary<string, object>
+    {
+        { "Märke", Model.Model },
+        { "Årsmodell", Model.Year },
+        { "Pris per dygn", Model.Price },
+        { "Beskrivning", Model.Description },
+        { "Status", Model.IsActive },
+    };
+}
+
+<div class="container col-md-6">
+    @Html.Partial("_DeleteCard", details)
+</div>
+
+
+
+@* @model FribergCarRental.Models.Car
+
+@{
     ViewData["Title"] = "SoftDelete";
 }
 
@@ -49,3 +81,4 @@
         <a asp-action="Index">Tillbaka</a>
     </form>
 </div>
+ *@

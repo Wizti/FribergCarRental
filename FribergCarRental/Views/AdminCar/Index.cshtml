@@ -35,8 +35,9 @@
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
                         <i class="bi bi-eye"></i> Detaljer
                     </a>
-                    <a asp-action="SoftDelete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
-                        <i class="bi bi-trash"></i> Inaktivera
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> <span>@(item.IsActive.GetValueOrDefault() ? "Inaktivera" : "Aktivera")</span>
+                        
                     </a>
                 </td>
             </tr>

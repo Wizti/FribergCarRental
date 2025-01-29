@@ -13,14 +13,27 @@
     <div class="d-flex justify-content-between mt-4">
         @if (ViewData["DeleteAction"] != null)
         {
-            @* <form asp-action="Delete">
-                <input type="hidden" asp-for="UserId" />
-                <input asp-action="@ViewData["DeleteAction"]" asp-route-id="@ViewData["ItemId"]" type="submit" value="Ta bort" class="btn btn-danger" />           
-            </form> *@
-            <form asp-action="@ViewData["DeleteAction"]" method="post">
-                <input type="hidden" name="UserId" value="@ViewData["ItemId"]" />
-                <input type="submit" value="Ta bort" class="btn btn-danger" />
-            </form>
+            if (ViewData["Aktivera"] != null)
+            {
+                <form asp-action="@ViewData["DeleteAction"]" method="post">
+                    <input type="hidden" name="UserId" value="@ViewData["ItemId"]" />
+                    <input type="submit" value="@ViewData["Aktivera"]" class="btn btn-danger" />
+                </form>
+            }
+            else if (ViewData["Inaktivera"] != null)
+            {
+                <form asp-action="@ViewData["DeleteAction"]" method="post">
+                    <input type="hidden" name="UserId" value="@ViewData["ItemId"]" />
+                    <input type="submit" value="@ViewData["Inaktivera"]" class="btn btn-danger" />
+                </form>
+            }
+            else
+            {
+                <form asp-action="@ViewData["DeleteAction"]" method="post">
+                    <input type="hidden" name="UserId" value="@ViewData["ItemId"]" />
+                    <input type="submit" value="Ta bort" class="btn btn-danger" />
+                </form>
+            }
         }
 
         <a asp-action="@ViewData["BackAction"]" class="btn btn-secondary">
