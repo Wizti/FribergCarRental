@@ -114,7 +114,7 @@ namespace FribergCarRental.Controllers
             {
                 ModelState.AddModelError("", "Startdatum måste vara tidigare än slutdatum.");
                 return View("SelectDates", selectDatesVM);
-            }
+            }            
 
             return RedirectToAction("AvailableCars", selectDatesVM);
         }

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="container my-5">
+<div class="container">
     <div class="row">
         <div class="col-md-7">
             <div class="card shadow-lg border-0 rounded-3">
@@ -42,35 +42,50 @@
                     <hr />
                     <p><strong>Beskrivning:</strong> @Model.Description</p>
                     <p><strong>Pris:</strong> @Model.Price kr/dygn</p>
-                    @if (Context.Session.GetString("UserRole") == null || Context.Session.GetString("UserRole") == "Admin")
-                    {
-                        <a asp-controller="Car" asp-action="RentCar" method="get">
-                            <input type="hidden" name="carId" value="@Model.Id" />
-                            <button type="submit" class="btn btn-primary btn-sm">Till Uthyrning</button>
-                        </a>
-                    }
-                    else if (ViewData["StartDate"] != null && ViewData["EndDate"] != null)
-                    {
-                        <form asp-controller="Rental" asp-action="ConfirmRental" method="get">
-                            <input type="hidden" name="carId" value="@Model.Id" />
-                            <input type="hidden" name="startDate" value="@ViewData["StartDate"]" />
-                            <input type="hidden" name="endDate" value="@ViewData["EndDate"]" />
-                            <button type="submit" class="btn btn-primary w-100">Boka</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <form asp-controller="Car" asp-action="RentCar" method="get">
-                            <input type="hidden" name="carId" value="@Model.Id" />
-                            <button type="submit" class="btn btn-primary w-100">Till Uthyrning</button>
-                        </form>
-                    }
+                    <div class="mt-auto d-flex justify-content-between">
+                        @if (Context.Session.GetString("UserRole") == null || Context.Session.GetString("UserRole") == "Admin")
+                        {
+                            <a asp-controller="Car" asp-action="RentCar" method="get">
+                                <input type="hidden" name="carId" value="@Model.Id" />
+                                <button type="submit" class="btn btn-primary btn-100">Till Uthyrning</button>
+                            </a>
+                        }
+                        else if (ViewData["StartDate"] != null && ViewData["EndDate"] != null &&
+                            ViewData["StartDate"].ToString() != "0001-01-01" &&
+                            ViewData["EndDate"].ToString() != "0001-01-01")
+                        {
+                            <form asp-controller="Rental" asp-action="ConfirmRental" method="get">
+                                <input type="hidden" name="carId" value="@Model.Id" />
+                                <input type="hidden" name="startDate" value="@ViewData["StartDate"]" />
+                                <input type="hidden" name="endDate" value="@ViewData["EndDate"]" />
+                                <button type="submit" class="btn btn-primary w-100">Boka</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form asp-controller="Car" asp-action="RentCar" method="get">
+                                <input type="hidden" name="carId" value="@Model.Id" />
+                                <button type="submit" class="btn btn-primary w-100">Till Uthyrning</button>
+                            </form>
+                        }
+
+                        @if (ViewData["StartDate"] != null && ViewData["EndDate"] != null &&
+                            ViewData["StartDate"].ToString() != "0001-01-01" &&
+                            ViewData["EndDate"].ToString() != "0001-01-01")
+                        {
+                            <a asp-action="AvailableCars" asp-controller="Rental" asp-route-startDate="@ViewData["StartDate"]" asp-route-endDate="@ViewData["EndDate"]" class="btn btn-secondary">
+                                Tillbaka till bilar
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-action="Index" class="btn btn-secondary">
+                                Tillbaka till bilar
+                            </a>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="text-center mt-4">
-        <a asp-action="Index" class="btn btn-secondary">Tillbaka till bilar</a>
     </div>
 </div>

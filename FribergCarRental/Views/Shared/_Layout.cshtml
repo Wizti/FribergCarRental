@@ -44,19 +44,19 @@
                                 <ul class="dropdown-menu ">
                                     @if(Context.Session.GetString("UserRole") == "Admin")
                                     {
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminDashboard">Admin Dashboard</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminDashboard"><i class="fa-solid fa-house"></i> | Admin Dashboard</a></li>
                                         <li><hr class="dropdown-divider" /></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="AdminAccount" asp-action="Index">Hantera konton</a></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="AdminCar" asp-action="Index">Hantera bilar</a></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="AdminRental" asp-action="Index">Hantera bokningar</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="AdminAccount" asp-action="Index"><i class="fa-solid fa-users"></i> | Hantera konton</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="AdminCar" asp-action="Index"><i class="fa-solid fa-car"></i> | Hantera bilar</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="AdminRental" asp-action="Index"><i class="fa-regular fa-rectangle-list"></i> | Hantera bokningar</a></li>
                                         <li><hr class="dropdown-divider" /></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Logga ut</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa-solid fa-right-from-bracket"></i> | Logga ut</a></li>
                                     }
                                     @if (Context.Session.GetString("UserRole") == "Customer")
                                     {
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Customer" asp-action="Index">Mina bokningar</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Customer" asp-action="Index"><i class="fa-regular fa-rectangle-list"></i> | Mina bokningar</a></li>
                                         <li><hr class="dropdown-divider" /></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Logga ut</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa-solid fa-right-from-bracket"></i> | Logga ut</a></li>
                                     }
                                 </ul>
                             </li>

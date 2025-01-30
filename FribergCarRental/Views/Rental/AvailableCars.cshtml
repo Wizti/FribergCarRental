@@ -4,9 +4,15 @@
     ViewData["Title"] = "AvailableCars";
 }
 
-<h2>Tillgängliga bilar @ViewData["StartDate"] - @ViewData["EndDate"]</h2>
-<a class="btn btn-outline-primary btn-sm" asp-action="SelectDates" asp-controller="Rental">Tillbaka</a>
-<div class="container">    
+<div class="container justify-content-center col-md-6">
+    <div class="alert alert-success" role="alert">
+        <h2 class="text-center mb-3">Tillgängliga bilar</h2>
+        <div>
+            <h4 class="text-center"> @ViewData["StartDate"] - @ViewData["EndDate"]</h4>
+        </div>
+    </div>
+</div>
+<div class="container">
     <div class="row justify-content-center">
         @foreach (var item in Model)
         {
