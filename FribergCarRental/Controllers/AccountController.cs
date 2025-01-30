@@ -27,11 +27,6 @@ namespace FribergCarRental.Controllers
             return View();
         }
 
-        public IActionResult AccessDenied()
-        {
-            return View();
-        }
-
         public ActionResult Logout()
         {
             HttpContext.Session.Clear();

@@ -63,51 +63,7 @@ namespace FribergCarRental.Controllers
                 return NotFound();
             }
             return View(rental);
-        }
-
-        // GET: AdminRentalController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: AdminRentalController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AdminRentalController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: AdminRentalController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        
+        }        
 
         // POST: AdminRentalController/Delete/5
         [HttpPost]
