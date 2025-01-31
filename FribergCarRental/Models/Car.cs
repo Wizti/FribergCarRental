@@ -18,7 +18,7 @@ namespace FribergCarRental.Models
         [Required]
         [Display(Name = "Beskrivning")]
         public string Description { get; set; }
-        [Display(Name = "Aktiv")]
+        [Display(Name = "Status")]
         public bool? IsActive { get; set; }
         [Display(Name = "Bilder")]
         public virtual List<Image>? Images { get; set; }

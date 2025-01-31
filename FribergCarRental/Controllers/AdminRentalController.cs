@@ -76,6 +76,8 @@ namespace FribergCarRental.Controllers
                 if (rentalToDelete != null)
                 {
                     await _rentalRepository.DeleteAsync(rentalToDelete);
+                    TempData["SuccessMessage"] = $"Ordernummer: {rentalToDelete.Id} är borttagen!";
+
                     return RedirectToAction(nameof(Index));
                 }
                 return RedirectToAction(nameof(Index));

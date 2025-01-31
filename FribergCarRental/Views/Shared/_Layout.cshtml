@@ -14,9 +14,9 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container centered-container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="/images/BigLogo.png" width="30" height="30"/></a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="/images/BigLogo.png" width="30" height="30" /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
+                        aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -42,7 +42,7 @@
                                     @Context.Session.GetString("UserName")
                                 </button>
                                 <ul class="dropdown-menu ">
-                                    @if(Context.Session.GetString("UserRole") == "Admin")
+                                    @if (Context.Session.GetString("UserRole") == "Admin")
                                     {
                                         <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminDashboard"><i class="fa-solid fa-house"></i> | Admin Dashboard</a></li>
                                         <li><hr class="dropdown-divider" /></li>
@@ -74,6 +74,20 @@
     </header>
     <div class="container centered-container mt-4">
         <main role="main" class="pb-3">
+                @if (TempData["SuccessMessage"] != null)
+                {
+                <div id="toastContainer" class="toast-container toast-custom">
+                        <div id="successToast" class="toast show bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header">
+                                <strong class="me-auto">Information</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                            <div class="toast-body">
+                                @TempData["SuccessMessage"]
+                            </div>
+                        </div>
+                    </div>
+                }
             @RenderBody()
         </main>
     </div>

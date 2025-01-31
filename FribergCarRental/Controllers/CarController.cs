@@ -1,4 +1,5 @@
 ﻿using FribergCarRental.Data.interfaces;
+using FribergCarRental.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,8 @@ namespace FribergCarRental.Controllers
         {
             if (HttpContext.Session.GetString("UserId") == null || HttpContext.Session.GetString("UserRole") == "Admin")
             {
+                TempData["SuccessMessage"] = $"Du måste logga in för att kunna hyra en bil!";
+
                 var returnUrl = Url.Action("SelectDates", "Rental");
                 return RedirectToAction("Login", "Account", new { returnUrl });
             }

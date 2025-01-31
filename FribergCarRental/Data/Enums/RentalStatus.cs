@@ -1,11 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace FribergCarRental.Data.Enums
 {
     public enum RentalStatus
     {
-        Upcoming = 1, 
+        [Display(Name = "Kommande")]
+        Upcoming = 1,
+        [Display(Name = "Aktiv")]
         Active,
+        [Display(Name = "Utförd")]
         Completed
     }
 }

@@ -30,6 +30,8 @@ namespace FribergCarRental.Controllers
         public ActionResult Logout()
         {
             HttpContext.Session.Clear();
+            TempData["SuccessMessage"] = $"Du är nu utloggad!";
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -66,6 +68,8 @@ namespace FribergCarRental.Controllers
                 customer.Role = Role.Customer;
                 await _accountService.AddAsync(customer);
 
+                TempData["SuccessMessage"] = $"Välkommen {customer.FirstName}! Ditt konto har skapats och du kan nu hyra bilar!";
+
                 User user = await _accountService.GetUserByUsernameAsync(customer.UserName);
                 HttpContext.Session.SetInt32("UserId", user.Id);
                 HttpContext.Session.SetString("UserName", user.UserName);
@@ -101,6 +105,8 @@ namespace FribergCarRental.Controllers
             HttpContext.Session.SetInt32("UserId", user.Id);
             HttpContext.Session.SetString("UserName", user.UserName);
             HttpContext.Session.SetString("UserRole", user.Role.ToString());
+
+            TempData["SuccessMessage"] = $"Välkommen! Du är inloggad!";
 
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {

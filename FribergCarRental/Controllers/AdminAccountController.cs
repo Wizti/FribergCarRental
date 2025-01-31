@@ -105,6 +105,8 @@ namespace FribergCarRental.Controllers
                 customer.Role = Role.Customer;
                 await _userRepository.AddAsync(customer);
 
+                TempData["SuccessMessage"] = $"Kund: {customer.FirstName} {customer.LastName} har lagts till!";
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -138,10 +140,10 @@ namespace FribergCarRental.Controllers
                     if (customerVM.Password != null)
                     {
                         customer.Password = customerVM.Password;
-                    }
-                    //customer.Password = customer.Password;
+                    }                   
 
                     await _userRepository.UpdateUserAsync(customer);
+                    TempData["SuccessMessage"] = $"Kundnummer: {customer.Id} har uppdaterats";
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -171,6 +173,7 @@ namespace FribergCarRental.Controllers
 
                 await _userRepository.DeleteUserAsync(userToDelete);
 
+                TempData["SuccessMessage"] = $"Kund-> Kundnummer: {userToDelete.Id}, Namn: {userToDelete.FirstName} {userToDelete.LastName} har tagits bort";
                 return RedirectToAction(nameof(Index));
             }
             catch

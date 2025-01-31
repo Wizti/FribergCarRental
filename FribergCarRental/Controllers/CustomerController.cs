@@ -97,6 +97,8 @@ namespace FribergCarRental.Controllers
                 var rentalToDelete = await _rentalRepository.GetByIdAsync(rental.Id);
                 await _rentalRepository.DeleteAsync(rentalToDelete);
 
+                TempData["SuccessMessage"] = $"Din bokning med bokningsnummer: {rentalToDelete.Id} har tagits bort!";
+
                 return RedirectToAction(nameof(Index));
             }
             catch

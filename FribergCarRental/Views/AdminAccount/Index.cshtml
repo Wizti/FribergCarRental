@@ -7,12 +7,13 @@
 <h1 class="mb-4">@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-success">Skapa ny kund</a>
+    <a asp-action="Create" class="btn btn-success"><i class="fa-solid fa-plus"></i> Skapa ny kund</a>
 </p>
 
 <table class="table table-bordered table-hover text-center table-striped">
     <thead class="table-dark">
         <tr>
+            <th>Kundnummer</th>
             <th>E-post</th>
             <th>Användarnamn</th>
             <th>Lösenord</th>
@@ -26,6 +27,7 @@
             if (item.Role == FribergCarRental.Data.Enums.Role.Customer)
             {
                 <tr>
+                    <td>@item.Id</td>
                     <td>@item.Email</td>
                     <td>@item.UserName</td>
                     <td>******</td>

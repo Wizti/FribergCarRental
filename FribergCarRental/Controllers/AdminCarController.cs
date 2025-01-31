@@ -82,6 +82,8 @@ namespace FribergCarRental.Controllers
                         }
                     };
                     await _carRepository.AddAsync(car);
+
+                    TempData["SuccessMessage"] = $"{car.Model} har lagts till!";
                     return RedirectToAction("Index");
                 }
                 return View(createCarVM);
@@ -141,6 +143,7 @@ namespace FribergCarRental.Controllers
                     }
 
                     await _carRepository.UpdateAsync(car);
+                    TempData["SuccessMessage"] = $"Bil: {car.Model} har uppdaterats!";
                 }
                 return RedirectToAction("Index");
             }
@@ -162,6 +165,7 @@ namespace FribergCarRental.Controllers
                 if (carToDisable != null)
                 {
                     await _carRepository.DisableAsync(carToDisable);
+                    TempData["SuccessMessage"] = $"Bil: {carToDisable.Model} har ändrat status!";
                     return RedirectToAction("Index");
                 }
                 return NotFound();

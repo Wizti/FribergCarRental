@@ -5,7 +5,7 @@
 }
 <h1 class="mb-4">Bilregister</h1>
 <p>
-    <a asp-action="Create" class="btn btn-success">Skapa ny Bil</a>
+    <a asp-action="Create" class="btn btn-success"><i class="fa-solid fa-plus"></i> Skapa ny Bil</a>
 </p>
 
 <table class="table table-bordered table-hover text-center table-striped">
@@ -13,7 +13,7 @@
         <tr>
             <th>Modell</th>
             <th>Årsmodell</th>
-            <th style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Beskrivning</th>
+            <th>Bilder</th>
             <th>Pris per dygn</th>
             <th>Status</th>
             <th>Åtgärder</th>
@@ -25,9 +25,16 @@
             <tr>
                 <td>@item.Model</td>
                 <td>@item.Year</td>
-                <td title ="@item.Description" style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@item.Description</td>
+                <td>
+                    @foreach (var imgUrl in item.Images)
+                    {
+                        <img src="@imgUrl.ImageUrl" width="70" height="50" />
+                    }
+                </td>
                 <td>@item.Price</td>
-                <td>@item.IsActive</td>
+                <td>@(item.IsActive ?? false ? "Aktiv" : "Ej i bruk")
+                    
+                </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">
                         <i class="bi bi-pencil"></i> Ändra
@@ -37,7 +44,7 @@
                     </a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
                         <i class="bi bi-trash"></i> <span>@(item.IsActive.GetValueOrDefault() ? "Inaktivera" : "Aktivera")</span>
-                        
+
                     </a>
                 </td>
             </tr>
