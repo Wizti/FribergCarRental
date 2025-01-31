@@ -3,69 +3,56 @@
 @{
     ViewData["Title"] = "ConfirmRental";
 }
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-lg rounded-3">
+            <h4 class="card-header">
+                Bekräfta bokning
+            </h4>
+            <div class="card-body">
+                <h5 class="card-title mb-3"><strong>Från:</strong> @Model.StartDate</h5>
+                <h5 class="card-title mb-3"><strong>Till:</strong> @Model.EndDate</h5>
+                <table class="table table-bordered table-hover text-center table-striped mt-3">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Bil</th>
+                            <th>Från</th>
+                            <th>Till</th>
+                            <th>Pris per dygn</th>
+                            <th>Total Summa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.Car.Model</td>
+                            <td>@Model.StartDate</td>
+                            <td>@Model.EndDate</td>
+                            <td>@Model.Car.Price</td>
+                            <td>@(ViewBag.TotalPrice ?? "Price not available") kr</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end gap-3 mt-3">
+                    <form method="post" asp-controller="Rental" asp-action="Create">
+                        <input type="hidden" asp-for="Car.Model" value="@Model.Car.Model" />
+                        <input type="hidden" asp-for="StartDate" value="@Model.StartDate" />
+                        <input type="hidden" asp-for="EndDate" value="@Model.EndDate" />
+                        <input type="hidden" asp-for="Car.Price" value="@Model.Car.Price" />
+                        <input type="hidden" asp-for="Car.Id" value="@Model.Car.Id" />
 
-<h1>Bekräfta bokning</h1>
+                        <div class="form-group">
+                            <input type="submit" value="Boka" class="btn btn-primary px-5" />
+                        </div>
+                    </form>
 
-<div>
-    <hr />
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Car.Model)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StartDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EndDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Car.Price)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.Car.Model)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.EndDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.Car.Price)
-                </td>
-            </tr>
+                    <a asp-action="AvailableCars" asp-controller="Rental"
+                       asp-route-CarId="@Model.Car.Id"
+                       asp-route-StartDate="@Model.StartDate"
+                       asp-route-EndDate="@Model.EndDate"
+                       class="btn btn-secondary">Tillbaka</a>
 
-        </tbody>
-    </table>
-
-    <div>
-        <h4><strong>Totalt pris: @(ViewBag.TotalPrice ?? "Price not available") </strong></h4>
-    </div>
-    <div>
-        <form method="post" asp-controller="Rental" asp-action="Create">
-            <input type="hidden" asp-for="Car.Model" value="@Model.Car.Model" />
-            <input type="hidden" asp-for="StartDate" value="@Model.StartDate" />
-            <input type="hidden" asp-for="EndDate" value="@Model.EndDate" />
-            <input type="hidden" asp-for="Car.Price" value="@Model.Car.Price" />
-            <input type="hidden" asp-for="Car.Id" value="@Model.Car.Id" />
-
-            <div class="form-group">
-                <input type="submit" value="Boka" class="btn btn-primary" />
+                </div>
             </div>
-        </form>
-    </div>
-    <div>
-        <a asp-action="AvailableCars" asp-controller="Rental"
-           asp-route-CarId="@Model.Car.Id"
-           asp-route-StartDate="@Model.StartDate.ToString("yyyy-MM-dd")"
-           asp-route-EndDate="@Model.EndDate.ToString("yyyy-MM-dd")"
-           class="btn btn-secondary">Tillbaka</a>
+        </div>
     </div>
 </div>

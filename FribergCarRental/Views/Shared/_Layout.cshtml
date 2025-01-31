@@ -39,7 +39,7 @@
                         {
                             <li class="nav-item dropdown">
                                 <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    @Context.Session.GetString("UserName")
+                                    <span>Inloggad: @Context.Session.GetString("UserName")</span>
                                 </button>
                                 <ul class="dropdown-menu ">
                                     @if (Context.Session.GetString("UserRole") == "Admin")
@@ -66,6 +66,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Create">Skapa konto</a>
+                            </li>
                         }
                     </ul>
                 </div>
@@ -74,20 +77,34 @@
     </header>
     <div class="container centered-container mt-4">
         <main role="main" class="pb-3">
-                @if (TempData["SuccessMessage"] != null)
-                {
+            @if (TempData["SuccessMessage"] != null)
+            {
                 <div id="toastContainer" class="toast-container toast-custom">
-                        <div id="successToast" class="toast show bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="toast-header">
-                                <strong class="me-auto">Information</strong>
-                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                            </div>
-                            <div class="toast-body">
-                                @TempData["SuccessMessage"]
-                            </div>
+                    <div id="successToast" class="toast show bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <strong class="me-auto">Information</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            @TempData["SuccessMessage"]
                         </div>
                     </div>
-                }
+                </div>
+            }
+            @if (TempData["WarningMessage"] != null)
+            {
+                <div id="toastContainer" class="toast-container toast-custom">
+                    <div id="successToast" class="toast show bg-warning text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <strong class="me-auto">Information</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            @TempData["WarningMessage"]
+                        </div>
+                    </div>
+                </div>
+            }
             @RenderBody()
         </main>
     </div>

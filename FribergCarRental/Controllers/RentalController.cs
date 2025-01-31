@@ -133,6 +133,13 @@ namespace FribergCarRental.Controllers
                     RedirectToAction("Login", "Account");
                 }
 
+                bool isCarAvailable = await _rentalService.IsCarAvailableAsync(rentalVM.Car.Id, rentalVM.StartDate, rentalVM.EndDate);
+                if (!isCarAvailable)
+                {                    
+                    TempData["WarningMessage"] = "Denna bil är tyvärr inte tillgänglig";
+                    return RedirectToAction("SelectDates");
+                }
+
                 var rental = new Rental
                 {
                     CarId = rentalVM.Car.Id,
@@ -145,7 +152,7 @@ namespace FribergCarRental.Controllers
 
                 ViewBag.TotalPrice = await _rentalService.CalculateTotalPriceAsync(rental.RentalStart, rental.RentalEnd, rental.CarId);
 
-                return View("RentalSuccess", rentalVM);
+                return RedirectToAction("RentalSuccess", rentalVM);
             }
             catch
             {

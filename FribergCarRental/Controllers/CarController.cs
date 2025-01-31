@@ -28,7 +28,7 @@ namespace FribergCarRental.Controllers
         {
             if (HttpContext.Session.GetString("UserId") == null || HttpContext.Session.GetString("UserRole") == "Admin")
             {
-                TempData["SuccessMessage"] = $"Du måste logga in för att kunna hyra en bil!";
+                TempData["SuccessMessage"] = $"Logga in eller skapa konto för att boka en bil!";
 
                 var returnUrl = Url.Action("SelectDates", "Rental");
                 return RedirectToAction("Login", "Account", new { returnUrl });
