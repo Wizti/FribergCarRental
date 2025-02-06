@@ -5,13 +5,13 @@ namespace FribergCarRental.Models
 {
     public class Customer : User
     {
-        [Required]
+        [Required(ErrorMessage = "Förnamn måste anges")]
         [Display(Name = "Förnamn")]
         public string FirstName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Efternamn måste anges")]
         [Display(Name = "Efternamn")]
         public string LastName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Telefonnummer måste anges")]
         [Display(Name = "Telefonnummer")]
         public string Phone { get; set; }
         public int AddressId { get; set; }

@@ -28,7 +28,7 @@ namespace FribergCarRental.Services
 
         public async Task<Car> GetCarByIdAsync(int carId)
         {
-            return await _carRepository.GetByIdAsync(carId);
+            return await _carRepository.GetFullByIdAsync(carId);
         }
 
         public async Task<bool> IsCarAvailableAsync(int carId, DateOnly startDate, DateOnly endDate)

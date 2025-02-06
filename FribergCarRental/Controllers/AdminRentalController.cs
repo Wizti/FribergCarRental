@@ -28,11 +28,18 @@ namespace FribergCarRental.Controllers
                 _rentalService.UpdateRentalStatus(rental);
             }
 
-            var rentalRecords = await Task.WhenAll(rentals.Select(async r => new RentalRecordViewModel
+            var rentalRecords = new List<RentalRecordViewModel>();
+
+            foreach (var rental in rentals)
             {
-                Rental = r,
-                TotalPrice = await _rentalService.CalculateTotalPriceAsync(r.RentalStart, r.RentalEnd, r.CarId)
-            }));
+                var totalPrice = await _rentalService.CalculateTotalPriceAsync(rental.RentalStart, rental.RentalEnd, rental.CarId);
+
+                rentalRecords.Add(new RentalRecordViewModel
+                {
+                    Rental = rental,
+                    TotalPrice = totalPrice
+                });
+            }
 
             return View(rentalRecords);
         }

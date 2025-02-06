@@ -4,47 +4,20 @@
     ViewData["Title"] = "RentalSuccess";
 }
 
-<h1>Din bokning är nu bekräftad</h1>
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+            <div class="card-body">
+                <i class="bi bi-check-circle-fill text-success fs-1 mb-3"></i>
+                <h4 class="fw-bold text-primary">Din bokning är nu bekräftad!</h4>
+                <p class="text-muted">Du omdirigeras strax till startsidan...</p>
+            </div>
+        </div>
+    </div>
+</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Car.Model)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Car.Price)
-            </th>
-            <th>
-                Total summa
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => Model.Car.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.Car.Price)
-            </td>
-            <td>
-            @ViewBag.TotalPrice
-            </td>
-        </tr>
-
-    </tbody>
-</table>
+<script>
+    setTimeout(function () {
+        window.location.href = '@Url.Action("Index", "Home")';
+    }, 5000);
+</script>

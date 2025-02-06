@@ -113,7 +113,7 @@ namespace FribergCarRental.Controllers
                 return Redirect(returnUrl);
             }
 
-            return RedirectToAction("Index", "Car");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

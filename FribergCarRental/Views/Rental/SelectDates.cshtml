@@ -8,27 +8,31 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-lg rounded-3">
-                <div class="card-body p-4">
-                    <h5 class="card-title text-center mb-4">
+                
+                <div class="card-body">
+                    <h5 class="card-header text-black text-center mb-4">
                         Välj datum för att se vilka bilar som finns tillgängliga.
                     </h5>
                     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
                     <form method="post" asp-controller="Rental" asp-action="SelectDates">
-                        <div class="row g-3 mb-4">
+                        <div class="row g-3 mb-5">
                             <div class="col-6">
-                                <label asp-for="StartDate" class="form-label">Från och med</label>
+                                <label asp-for="StartDate" class="form-label">Upphämtning</label>
                                 <input type="date" asp-for="StartDate" class="form-control" value="@Model.StartDate" required />
                             </div>
                             <div class="col-6">
-                                <label asp-for="EndDate" class="form-label">Till och med</label>
+                                <label asp-for="EndDate" class="form-label">Återlämning</label>
                                 <input type="date" asp-for="EndDate" class="form-control" value="@Model.EndDate" required />
                             </div>
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <a asp-action="Index" asp-controller="Car" class="btn btn-secondary">Tillbaka till bilar</a>
-                            <input type="submit" value="Visa tillgängliga bilar" class="btn btn-primary" />
+                            <button type="submit" class="btn btn-primary">
+                                Visa tillgängliga bilar
+                            </button>
+                            <a asp-action="Index" asp-controller="Car" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Tillbaka till bilar</a>
+                            
                         </div>
                     </form>
                 </div>

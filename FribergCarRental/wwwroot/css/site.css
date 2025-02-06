@@ -7,6 +7,7 @@ html {
     min-height: 100%;
     font-size: 14px;
 }
+
 header {
     color: white;
     padding: 20px 0;
@@ -37,13 +38,29 @@ body {
 .card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;    
+    justify-content: space-between;
     height: 100%;
     box-shadow: 4px 4px 10px 3px rgba(0, 0, 0, 0.459);
 }
+.card-header{
+    background-color: bisque;
+}
 
 #carhover:hover {
-        transform: scale(1.03);
+    transform: scale(1.03);
+}
+
+#car-header{
+    background-color: burlywood;
+}
+
+.admin-header {
+    border-radius: 30px !important;
+    background-color: lightgray;
+}
+.customer-header {
+    border-radius: 30px !important;
+    background-color: bisque;
 }
 
 .row {
@@ -64,17 +81,16 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
-    margin-top: 100px;
+    margin-top: 110px;
 }
 
 .btn:hover {
-        transform: scale(1.05);
-
+    transform: scale(1.05);
 }
 
 .btn:active {
-        transform: scale(0.98); 
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: scale(0.98);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .toast-custom {
@@ -85,6 +101,19 @@ body {
     z-index: 1050;
 }
 
+.navbar-nav .nav-link {
+    transition: color 0.3s, background-color 0.3s, border-radius 0.3s;
+    border-radius: 10px;
+}
 
+    .navbar-nav .nav-link:hover {
+        background-color: rgba(0, 0, 0, 0.059);
+        border-radius: 10px;
+    }
 
-
+    .navbar-nav .nav-link:focus,
+    .navbar-nav .nav-link:active {
+        outline: none;
+        background-color: rgba(0, 0, 0, 0.059);
+        border-radius: 10px;
+    }

@@ -3,36 +3,29 @@
 @{
     ViewData["Title"] = "ConfirmRental";
 }
+
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card shadow-lg rounded-3">
-            <h4 class="card-header">
-                Bekräfta bokning
-            </h4>
+            <div class="card-header text-black">
+                <h4 class="mb-0">Bekräfta bokning</h4>
+            </div>
             <div class="card-body">
-                <h5 class="card-title mb-3"><strong>Från:</strong> @Model.StartDate</h5>
-                <h5 class="card-title mb-3"><strong>Till:</strong> @Model.EndDate</h5>
-                <table class="table table-bordered table-hover text-center table-striped mt-3">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Bil</th>
-                            <th>Från</th>
-                            <th>Till</th>
-                            <th>Pris per dygn</th>
-                            <th>Total Summa</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>@Model.Car.Model</td>
-                            <td>@Model.StartDate</td>
-                            <td>@Model.EndDate</td>
-                            <td>@Model.Car.Price</td>
-                            <td>@(ViewBag.TotalPrice ?? "Price not available") kr</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="d-flex justify-content-end gap-3 mt-3">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <img src="@Model.Car.Images?.FirstOrDefault()?.ImageUrl" alt="Car Image" class="img-fluid rounded me-3" style="width: 250px; height: auto;">
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-3 mt-2"><strong>Bilmodell:</strong> @Model.Car.Model</h5>
+                        <p class="mb-1 "><strong>Från:</strong> @Model.StartDate.ToString("yyyy-MM-dd")</p>
+                        <p class="mb-1"><strong>Till:</strong> @Model.EndDate.ToString("yyyy-MM-dd")</p>
+                        <p class="mb-1"><strong>Pris per dygn:</strong> @Model.Car.Price kr</p>
+                        <hr class="dropdown-divider  mt-5" />
+                        <h5 class="mt-2"><strong>Total Summa:</strong> <span class="text-success">@(ViewBag.TotalPrice ?? "Pris ej tillgängligt") kr</span></h5>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-3 mt-4">
                     <form method="post" asp-controller="Rental" asp-action="Create">
                         <input type="hidden" asp-for="Car.Model" value="@Model.Car.Model" />
                         <input type="hidden" asp-for="StartDate" value="@Model.StartDate" />
@@ -40,17 +33,14 @@
                         <input type="hidden" asp-for="Car.Price" value="@Model.Car.Price" />
                         <input type="hidden" asp-for="Car.Id" value="@Model.Car.Id" />
 
-                        <div class="form-group">
-                            <input type="submit" value="Boka" class="btn btn-primary px-5" />
-                        </div>
+                        <button type="submit" class="btn btn-primary px-4">Boka</button>
                     </form>
 
                     <a asp-action="AvailableCars" asp-controller="Rental"
                        asp-route-CarId="@Model.Car.Id"
                        asp-route-StartDate="@Model.StartDate"
                        asp-route-EndDate="@Model.EndDate"
-                       class="btn btn-secondary">Tillbaka</a>
-
+                       class="btn btn-secondary px-4">Tillbaka</a>
                 </div>
             </div>
         </div>
