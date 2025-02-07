@@ -92,7 +92,6 @@ namespace FribergCarRental.Controllers
         }
 
         [HttpPost]
-        //public async Task<IActionResult> SelectDates(RentalViewModel rentalVM)
         public IActionResult SelectDates(SelectDatesViewModel selectDatesVM)
         {
             var customerId = HttpContext.Session.GetInt32("UserId");

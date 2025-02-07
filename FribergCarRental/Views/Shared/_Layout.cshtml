@@ -30,9 +30,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="RentCar">Boka</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Om oss</a>
-                        </li>
                     </ul>
                     <ul class="navbar-nav d-flex justify-content-end">
                         @if (Context.Session.GetString("UserRole") != null)
@@ -111,7 +108,7 @@
 
     <footer class="bg-light footer text-muted text-center border-top">
         <div class="container centered-container align-items-center">
-            &copy; 2025 - Friberg Car Rentals AB | <a asp-area="" asp-controller="Home" asp-action="Privacy">Om oss</a>
+            &copy; 2025 - Friberg Car Rentals AB 
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

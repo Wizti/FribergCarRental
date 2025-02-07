@@ -12,48 +12,48 @@
             <div class="row">
                 <div>
                     <label asp-for="FirstName" class="form-label fw-semibold">Förnamn</label>
-                    <input asp-for="FirstName" class="form-control" />
+                    <input asp-for="FirstName" class="form-control" placeholder="Förnamn" />
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
                 <div>
                     <label asp-for="LastName" class="form-label fw-semibold">Efternamn</label>
-                    <input asp-for="LastName" class="form-control" />
+                    <input asp-for="LastName" class="form-control" placeholder="Efternamn" />
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
                 <div>
                     <label asp-for="Phone" class="form-label fw-semibold">Telefonnummer</label>
-                    <input asp-for="Phone" class="form-control" />
+                    <input asp-for="Phone" class="form-control" placeholder="Telefonnummer" />
                     <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
                 <div>
                     <label asp-for="Email" class="form-label fw-semibold">E-post</label>
-                    <input asp-for="Email" class="form-control" type="email" />
+                    <input asp-for="Email" class="form-control" type="email" placeholder="E-post" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div>
-                    <label asp-for="Address.Street" class="form-label fw-semibold">Adress (Gata)</label>
-                    <input asp-for="Address.Street" class="form-control" />
+                    <label asp-for="Address.Street" class="form-label fw-semibold">Gata</label>
+                    <input asp-for="Address.Street" class="form-control" placeholder="Gata" />
                     <span asp-validation-for="Address.Street" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
                     <label asp-for="Address.Postalcode" class="form-label fw-semibold">Postnummer</label>
-                    <input asp-for="Address.Postalcode" class="form-control" />
+                    <input asp-for="Address.Postalcode" class="form-control" placeholder="Postnummer" />
                     <span asp-validation-for="Address.Postalcode" class="text-danger"></span>
                 </div>
                 <div>
                     <label asp-for="Address.City" class="form-label fw-semibold">Stad</label>
-                    <input asp-for="Address.City" class="form-control" />
+                    <input asp-for="Address.City" class="form-control" placeholder="Stad" />
                     <span asp-validation-for="Address.City" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
                     <label asp-for="UserName" class="form-label fw-semibold">Användarnamn</label>
-                    <input asp-for="UserName" class="form-control" />
+                    <input asp-for="UserName" class="form-control" placeholder="Användarnamn" />
                     <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
                     <label asp-for="Password" class="form-label fw-semibold">Lösenord</label>
                     <div class="input-group">
-                        <input asp-for="Password" type="password" class="form-control" id="password" />
+                        <input asp-for="Password" type="password" class="form-control" id="password" placeholder="Lösenord" />
 
                         <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                             <i class="bi bi-eye"></i>

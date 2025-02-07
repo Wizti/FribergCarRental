@@ -106,7 +106,7 @@ namespace FribergCarRental.Controllers
             HttpContext.Session.SetString("UserName", user.UserName);
             HttpContext.Session.SetString("UserRole", user.Role.ToString());
 
-            TempData["SuccessMessage"] = $"Välkommen! Du är inloggad!";
+            TempData["SuccessMessage"] = $"Välkommen {user.UserName} ! Du är inloggad!";
 
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {

@@ -12,27 +12,27 @@
 
             <div>
                 <label asp-for="Model" class="form-label fw-semibold">Modell</label>
-                <input asp-for="Model" class="form-control" />
+                <input asp-for="Model" class="form-control" placeholder="Modell" />
                 <span asp-validation-for="Model" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="Year" class="form-label fw-semibold">Årsmodell</label>
-                <input asp-for="Year" class="form-control" />
+                <input asp-for="Year" class="form-control" placeholder="Årsmodell" />
                 <span asp-validation-for="Year" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="Price" class="form-label fw-semibold">Pris (kr/dygn)</label>
-                <input asp-for="Price" class="form-control" />
+                <input asp-for="Price" class="form-control" placeholder="Pris (kr/dygn)" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="Description" class="form-label fw-semibold">Beskrivning</label>
-                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Beskrivning"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="md-12">
-                <label asp-for="ImageUrl" class="form-label fw-semibold">Bild-URL</label>
-                <input asp-for="ImageUrl" class="form-control" />
+                <label asp-for="ImageUrl" class="form-label fw-semibold">Bild-Url</label>
+                <input asp-for="ImageUrl" class="form-control" placeholder="Bild-Url" />
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
 

@@ -30,8 +30,9 @@
                 <td>
                     @if (@item.Rental.Customer != null)
                     {
-                        @item.Rental.Customer.FirstName
-                        @item.Rental.Customer.LastName
+                        <span>
+                            @item.Rental.Customer.FirstName &nbsp;@item.Rental.Customer.LastName
+                        </span>
                     }
                     else
                     {
